@@ -17,6 +17,22 @@ def get(todo):
         jerFactors = cms.vstring(  # PF10
                 "5.5 1 0.007 0.07 0.072"),
     )
+
+    defs["JetViewAK4Calo"]  = cms.PSet(
+        miniView = cms.string("JetView"),
+        storeageVersion = cms.untracked.int32(1),
+        disableJetID = cms.bool(True),
+        optionalCaloJets4ID = cms.InputTag("ak5CaloJets","","RECO"),
+        optionalCaloID4ID  = cms.InputTag("ak5JetID"),
+        branchPrefix = cms.untracked.string("PFAK4Calo"),
+        maxEta = cms.double(5.2),
+        minPt = cms.double(3),
+        maxnum = cms.int32(3),
+        input = cms.InputTag("selectedPatJetsAK4Calo"),
+        variations= cms.vstring("", "jecUp", "jecDown"),
+        jerFactors = cms.vstring(  # PF10
+                "5.5 1 0.007 0.07 0.072"),
+    )
     # and so on
     # defs["JetViewAK4Calo"]= cmsPSet(...
 
