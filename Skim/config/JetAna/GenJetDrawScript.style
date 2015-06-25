@@ -8,7 +8,7 @@
 h.SetLineWidth(3)
 h.SetMarkerSize(1.0)
 
-if hsample == "MinBias_TuneZ2star_13TeV-pythia6":
+if hsample == "MinBias_TuneZ2star_13TeV-pythia6" or hsample == "MinBias_TuneZ2star_13TeV-pythia6_MagnetOff":
     h.SetLineColor(kRed)
     h.SetMarkerStyle(20)
     h.SetMarkerColor(kRed)
@@ -20,11 +20,11 @@ if hsample == "ReggeGribovPartonMC_13TeV-EPOS":
     h.SetLineColor(kBlue)
     h.SetMarkerStyle(22)
     h.SetMarkerColor(kBlue)
-if hsample == "MinBias_TuneMonash13_13TeV-pythia8":
+if hsample == "MinBias_TuneMonash13_13TeV-pythia8" or hsample == "MinBias_TuneMonash13_13TeV-pythia8_MagnetOff":
     h.SetLineColor(kGreen)
     h.SetMarkerStyle(23)
     h.SetMarkerColor(kGreen)
-if hsample == "MinBias_TuneCUETP8M1_13TeV-pythia8":
+if hsample == "MinBias_TuneCUETP8M1_13TeV-pythia8" or hsample == "MinBias_TuneMBR_13TeV-pythia8_MagnetOff":
     h.SetLineColor(kMagenta)
     h.SetMarkerStyle(24)
     h.SetMarkerColor(kMagenta)
@@ -51,20 +51,40 @@ if "hdNdPt" in cname:
     h.GetXaxis().SetTitle("p_{T} [GeV/c]")
     h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hNak5GenJets":
-    c.cd(1).SetLogy()
-    h.SetMaximum(1e7)
-    h.GetYaxis().SetTitle("N_{ev}")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("N_{jet}")
-    h.GetXaxis().SetTitleOffset(1.2)
-    
-
-if cname == "hdNdEak5GenJets":
-    h.SetMaximum(1e-2)
+if "hdNdE" in cname:
+    h.SetMaximum(1)
     h.GetYaxis().SetTitle("(1/N_{ev})dN/dE [1/GeV]")
     h.GetYaxis().SetTitleOffset(2.0)
     h.GetXaxis().SetTitle("E [GeV]")
+    h.GetXaxis().SetTitleOffset(1.2)
+
+if cname == "hNak4GenJets":
+    c.cd(1).SetLogy()
+    h.GetYaxis().SetTitle("N/N_{ev}")
+    h.GetYaxis().SetTitleOffset(2.0)
+    h.GetXaxis().SetTitle("Number of Gen Jets")
+    h.GetXaxis().SetTitleOffset(1.2)    
+
+if cname == "hdNdPtak5CastorJets":
+    h.SetMaximum(100)
+    h.SetMinimum(1e-6)
+
+if cname == "hdNdPtHotCasGenJet":
+    h.SetMaximum(100)
+    h.SetMinimum(1e-6)
+
+if cname == "hdNdEtaak4GenJets":
+    h.SetMaximum(10)
+    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#eta")
+    h.GetYaxis().SetTitleOffset(2.0)
+    h.GetXaxis().SetTitle("#eta")
+    h.GetXaxis().SetTitleOffset(1.2)
+
+if cname == "hdNdEtaak4CaloJets":
+    h.SetMaximum(1e-1)
+    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#eta")
+    h.GetYaxis().SetTitleOffset(2.0)
+    h.GetXaxis().SetTitle("#eta")
     h.GetXaxis().SetTitleOffset(1.2)
 
 if cname == "hdNdDeltaPhiCasCenGenJet":
@@ -89,6 +109,15 @@ if cname == "hdNdDeltaPtCenCasGenJet":
     h.SetMaximum(8)
     h.SetMinimum(0)
     h.GetYaxis().SetTitle("1/N dN/d#Delta p_{T} [1/GeV/c]")
-    # h.GetYaxis().SetTitleOffset(2.0)
+    h.GetYaxis().SetTitleOffset(2.0)
     h.GetXaxis().SetTitle("#Delta p_{T} [GeV/c]")
-    # h.GetXaxis().SetTitleOffset(1.2)
+    h.GetXaxis().SetTitleOffset(1.2)
+
+if cname == "hDeltaPhiGenJetHotCasJet":
+    c.cd(1).SetLogy()
+    h.SetMaximum(5e5)
+    h.SetMinimum(10)
+    h.GetYaxis().SetTitle("N")
+    h.GetYaxis().SetTitleOffset(2.0)
+    h.GetXaxis().SetTitle("#Delta #phi")
+    h.GetXaxis().SetTitleOffset(1.2)
