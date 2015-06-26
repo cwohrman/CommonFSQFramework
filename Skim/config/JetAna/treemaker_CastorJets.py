@@ -49,28 +49,41 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 print process.GlobalTag.globaltag
 # process.load("Configuration.StandardSequences.Reconstruction_cff")
 
-# # get custom CASTOR conditions to mark/remove bad channels
-# process.load("CondCore.DBCommon.CondDBSetup_cfi")
-# process.CastorDbProducer = cms.ESProducer("CastorDbProducer")
 
-# process.es_ascii = cms.ESSource("CastorTextCalibrations",
-#    input = cms.VPSet(
-#        cms.PSet(
-#            object = cms.string('ChannelQuality'),
-#            file = cms.FileInPath('data/customcond/castor/quality__2015.txt')
-#        ),
-#    )
-# )
+###############################################################################
+###############################################################################
+# get custom CASTOR conditions to mark/remove bad channels
+process.load("CondCore.DBCommon.CondDBSetup_cfi")
+process.CastorDbProducer = cms.ESProducer("CastorDbProducer")
 
-# process.es_prefer_castor = cms.ESPrefer('CastorTextCalibrations','es_ascii')
+process.es_ascii = cms.ESSource("CastorTextCalibrations",
+   input = cms.VPSet(
+       cms.PSet(
+           object = cms.string('Gains'),
+           file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
+       ),
+   )
+)
+process.es_prefer_castor = cms.ESPrefer('CastorTextCalibrations','es_ascii')
 
-# # for MC reproduce the CastorTowers and CastorJets to remove the bad channels there
-# if not isData:
-#     process.load('RecoLocalCalo.Castor.Castor_cff')
-#     process.CastorReReco = cms.Path(process.CastorFullReco)
+# for MC reproduce the CastorTowers and CastorJets to remove the bad channels there
+if isData:
+    process.load('RecoLocalCalo.Castor.Castor_cff')
+    # construct the module which executes the RechitCorrector for data reconstructed in releases >= 4.2.X
+    process.rechitcorrector = cms.EDProducer("RecHitCorrector",
+            rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
+            revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
+            doInterCalib = cms.bool(True) # don't do intercalibration, RecHitCorrector will only correct the EM response and remove BAD channels
+    )
+    process.CastorTowerReco.inputprocess = "rechitcorrector"
+    process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
+###############################################################################
+###############################################################################
 
 # produce HF PFClusters
 # process.PFClustersHF = cms.Path(process.particleFlowRecHitHF*process.particleFlowClusterHF)
+
+
 
 
 
@@ -122,7 +135,6 @@ process.patJetsAK4Calo.useLegacyJetMCFlavour=True # Need to use legacy flavour s
 
 
 
-
 # Here starts the CFF specific part
 import CommonFSQFramework.Core.customizePAT
 process = CommonFSQFramework.Core.customizePAT.customize(process)
@@ -162,4 +174,5 @@ if not isData:
 #     process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
 
 # process = CommonFSQFramework.Core.customizePAT.addPath(process, process.PFClustersHF)
+if isData: process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
 process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)
