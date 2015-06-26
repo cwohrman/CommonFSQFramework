@@ -76,7 +76,8 @@ def numEvents(ds):
     if "MinBias_TuneEE5C_13TeV-herwigpp" in name(ds): return 1000000 
     
     # data
-    if "Run2015A" in name(ds): return 2001085
+    if "ZeroBias" in name(ds): return 2001085
+    if "L1MinimumBias" in name(ds): return 752615
     
     return evts
 

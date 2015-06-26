@@ -9,3 +9,4 @@
 /MinBias_TuneMBR_13TeV-pythia8/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO
 /MinBias_TuneMonash13_13TeV-pythia8/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO
 /ZeroBias/Run2015A-PromptReco-v1/RECO
+/L1MinimumBias/Run2015A-PromptReco-v1/RECO

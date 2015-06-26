@@ -13,7 +13,7 @@ else:
     if isData: print "Disabling MC-specific features for sample",s
 
 # for test purpose
-# isData = False
+#isData = True
 
 process = cms.Process("Treemaker")
 
@@ -25,12 +25,17 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
 
 # Source
-process.source = cms.Source("PoolSource",
-    # fileNames = cms.untracked.vstring('/store/user/hvanhaev/ZeroBias1/Run2015A-v1_RERECO_Run247324_GR_P_V54_withCustomCond-v1/150608_213851/0000/output_data_rereco_1.root')
-    #fileNames = cms.untracked.vstring('/store/user/hvanhaev/MinBias_TuneMonash13_13TeV-pythia8/RunIISpring15DR74-NoPU0T_MCRUN2_740TV0_step2-v2/150610_055012/0000/step2_RAW2DIGI_L1Reco_RECO_1.root')
-    #fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/ReggeGribovPartonMC_13TeV-EPOS/GEN-SIM-RECO/NoPURawReco_castor_MCRUN2_74_V8B-v1/10000/BC62D29E-7707-E511-A6D9-AC853D9F5344.root')
-    fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias/RECO/PromptReco-v1/000/247/607/00000/52EA626D-9210-E511-843F-02163E01451D.root')
-)
+if not isData:
+    process.source = cms.Source("PoolSource",
+        # fileNames = cms.untracked.vstring('/store/user/hvanhaev/ZeroBias1/Run2015A-v1_RERECO_Run247324_GR_P_V54_withCustomCond-v1/150608_213851/0000/output_data_rereco_1.root')
+        #fileNames = cms.untracked.vstring('/store/user/hvanhaev/MinBias_TuneMonash13_13TeV-pythia8/RunIISpring15DR74-NoPU0T_MCRUN2_740TV0_step2-v2/150610_055012/0000/step2_RAW2DIGI_L1Reco_RECO_1.root')
+        fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/ReggeGribovPartonMC_13TeV-EPOS/GEN-SIM-RECO/NoPURawReco_castor_MCRUN2_74_V8B-v1/10000/BC62D29E-7707-E511-A6D9-AC853D9F5344.root')
+    )
+if isData: 
+    process.source = cms.Source("PoolSource",
+        fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias/RECO/PromptReco-v1/000/247/607/00000/52EA626D-9210-E511-843F-02163E01451D.root')
+    )
+
 
 # from PhysicsTools.PatAlgos.patInputFiles_cff import filesRelValProdTTbarGENSIMRECO
 # process.source.fileNames = filesRelValProdTTbarGENSIMRECO
@@ -52,44 +57,80 @@ print process.GlobalTag.globaltag
 
 ###############################################################################
 ###############################################################################
-# get custom CASTOR conditions to mark/remove bad channels
+
+############################################################################
+# get custom CASTOR conditions to remove bad channels and gain corrections #
+############################################################################
 process.load("CondCore.DBCommon.CondDBSetup_cfi")
 process.CastorDbProducer = cms.ESProducer("CastorDbProducer")
 
-process.es_ascii = cms.ESSource("CastorTextCalibrations",
-   input = cms.VPSet(
-       cms.PSet(
-           object = cms.string('Gains'),
-           file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
-       ),
-   )
-)
+# when using data apply gain and quality corrections
+if isData:
+  process.es_ascii = cms.ESSource("CastorTextCalibrations",
+      input = cms.VPSet(
+        cms.PSet(
+            object = cms.string('Gains'),
+            file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
+        ),
+        cms.PSet(
+            object = cms.string('ChannelQuality'),
+            file = cms.FileInPath('data/quality__2015.txt')
+        )
+     )
+  )
+# else if it is MC then using only chanel quality changes
+else:
+  process.es_ascii = cms.ESSource("CastorTextCalibrations",
+      input = cms.VPSet(
+        cms.PSet(
+            object = cms.string('ChannelQuality'),
+            file = cms.FileInPath('data/quality__2015.txt')
+        )
+     )
+  )
+
 process.es_prefer_castor = cms.ESPrefer('CastorTextCalibrations','es_ascii')
 
-# for MC reproduce the CastorTowers and CastorJets to remove the bad channels there
-if isData:
-    process.load('RecoLocalCalo.Castor.Castor_cff')
-    # construct the module which executes the RechitCorrector for data reconstructed in releases >= 4.2.X
-    process.rechitcorrector = cms.EDProducer("RecHitCorrector",
-            rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
-            revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
-            doInterCalib = cms.bool(True) # don't do intercalibration, RecHitCorrector will only correct the EM response and remove BAD channels
-    )
-    process.CastorTowerReco.inputprocess = "rechitcorrector"
-    process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
+
+########################
+# Castor RecHit ReReco #
+########################
+process.load('RecoLocalCalo.Castor.Castor_cff')
+# construct the module which executes the RechitCorrector for data reconstructed in releases >= 4.2.X
+process.rechitcorrector = cms.EDProducer("RecHitCorrector",
+        rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
+        revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
+        doInterCalib = cms.bool(True) # don't do intercalibration, RecHitCorrector will only correct the EM response and remove BAD channels
+)
+process.CastorTowerReco.inputprocess = "rechitcorrector"
+process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
 ###############################################################################
 ###############################################################################
-
-# produce HF PFClusters
-# process.PFClustersHF = cms.Path(process.particleFlowRecHitHF*process.particleFlowClusterHF)
-
-
-
-
 
 
 ###############################################################################
 ###############################################################################
+
+if not isData:
+    ############################
+    # Add ReReco of ak5GenJets #
+    ############################
+    process.load('RecoJets.Configuration.GenJetParticles_cff')
+    process.load('RecoJets.Configuration.RecoGenJets_cff')
+    from RecoJets.JetProducers.ak5GenJets_cfi import ak5GenJets
+    process.lowPtak5GenJets = ak5GenJets.clone(jetPtMin = 0.5 )
+    process.LowPtGenJetsReCluster = cms.Path(process.lowPtak5GenJets)
+###############################################################################
+###############################################################################
+
+
+
+###############################################################################
+###############################################################################
+
+###########################################################################
+# Add PAT calo Jets # !!! Still with old JEC (Jet Energy Corrections) !!! #
+###########################################################################
 ## switch to uncheduled mode
 process.options.allowUnscheduled = cms.untracked.bool(True)
 #process.Tracer = cms.Service("Tracer")
@@ -98,9 +139,7 @@ process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
 process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
 from PhysicsTools.PatAlgos.tools.metTools import addMETCollection
-#addMETCollection(process, labelName='patMETCalo', metSource='met')
 addMETCollection(process, labelName='patMETPF', metSource='pfMetT1')
-#addMETCollection(process, labelName='patMETTC', metSource='tcMet') # FIXME: removed from RECO/AOD; needs functionality to add to processing
 
 ## uncomment the following line to add different jet collections
 ## to the event content
@@ -123,12 +162,7 @@ addJetCollection(
      , 'pfSimpleSecondaryVertexHighPurBJetTags'
      , 'pfCombinedInclusiveSecondaryVertexV2BJetTags'
      ]
-   )
-#process.out.outputCommands.append( 'drop *_selectedPatJets%s_pfCandidates_*'%( labelAK4Calo ) )
-## JetID works only with RECO input for the CaloTowers (s. below for 'process.source.fileNames')
-#process.patJets.addJetID=True
-#process.load("RecoJets.JetProducers.ak4JetID_cfi")
-#process.patJets.jetIDMap="ak4JetID"
+)
 process.patJetsAK4Calo.useLegacyJetMCFlavour=True # Need to use legacy flavour since the new flavour requires jet constituents which are dropped for CaloJets from AOD
 ###############################################################################
 ###############################################################################
@@ -162,17 +196,14 @@ if not isData:
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloTowerViewsConfigs.get(["CaloTowerView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.PFObjectsViewsConfigs.get(["PFCandidateView","ecalPFClusterView","hcalPFClusterView","hfPFClusterView"]))
-process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.TriggerResultsViewsConfigs.get(["ZeroBiasTriggerResultsView","L1GTriggerResultsView"]))
+process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.TriggerResultsViewsConfigs.get(["CastorSpecialJetTriggerResultsView","L1GTriggerResultsView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.JetViewsConfigs.get(["JetViewAK4Calo"]))
 
 if not isData:
     process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.GenLevelViewsConfigs.get(["GenPartView"]))
-    process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.GenLevelViewsConfigs.get(["ak4GenJetView"]))
+    process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.GenLevelViewsConfigs.get(["lowPtak5GenJetView"]))
 
-# # add paths
-# if not isData:
-#     process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
+    process = CommonFSQFramework.Core.customizePAT.addPath(process, process.LowPtGenJetsReCluster)
 
-# process = CommonFSQFramework.Core.customizePAT.addPath(process, process.PFClustersHF)
-if isData: process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
+process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
 process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)

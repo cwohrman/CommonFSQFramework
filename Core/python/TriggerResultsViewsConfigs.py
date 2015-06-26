@@ -23,6 +23,19 @@ def get(todo):
         CastorHaloMuon = cms.vstring("HLT_L1CastorMuon*")
     )
 
+    defs["CastorSpecialJetTriggerResultsView"]  = cms.PSet(
+        miniView = cms.string("TriggerResultsView"),
+        branchPrefix = cms.untracked.string("trg"),
+        process = cms.string("HLT"),
+        triggers = cms.vstring("ZeroBias","MinBias","Random","CastorMedJet","CastorHighJet","CastorDiJet"),
+        ZeroBias = cms.vstring("HLT_ZeroBias*"),
+        MinBias = cms.vstring("HLT_L1MinimumBias*"),
+        Random = cms.vstring("HLT_Random*"),
+        CastorMedJet = cms.vstring("HLT_L1CastorMediumJet_v*"),
+        CastorHighJet = cms.vstring("HLT_L1CastorHighJet_v*"),
+        CastorDiJet = cms.vstring("HLT_L1CastorMediumJet_PFJet15_v*")
+    )
+
     defs["L1GTriggerResultsView"] = cms.PSet(
         miniView = cms.string("TriggerResultsView"),
         branchPrefix = cms.untracked.string("trgl1"),
