@@ -14,9 +14,12 @@ sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["GT"]='MCRUN2_75_V5'
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["name"]='MinBias_TuneCUETP8M1_13TeV-pythia8'
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["isData"]=False
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["numEvents"]=999330
+sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneCUETP8M1_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneCUETP8M1_13TeV-pythia8/150626_153537/0000/'
+sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneCUETP8M1_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneCUETP8M1_13TeV-pythia8/150626_153537/0000//'
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["json"]=''
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["lumiMinBias"]=1.2743565285698254e-05
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["XS"]=78418400000.0
+sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneCUETP8M1_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneCUETP8M1_13TeV-pythia8/150626_153537/0000//'
 sam["MinBias_TuneCUETP8M1_13TeV-pythia8"]["DS"]='/MinBias_TuneCUETP8M1_13TeV-pythia8/RunIISpring15DR74-NoPURawReco_castor_MCRUN2_74_V8B-v1/GEN-SIM-RECO'
 
 sam["MinBias_TuneMBR_13TeV-pythia8"]={}
@@ -25,9 +28,12 @@ sam["MinBias_TuneMBR_13TeV-pythia8"]["GT"]='MCRUN2_75_V5'
 sam["MinBias_TuneMBR_13TeV-pythia8"]["name"]='MinBias_TuneMBR_13TeV-pythia8'
 sam["MinBias_TuneMBR_13TeV-pythia8"]["isData"]=False
 sam["MinBias_TuneMBR_13TeV-pythia8"]["numEvents"]=998920
+sam["MinBias_TuneMBR_13TeV-pythia8"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMBR_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMBR_13TeV-pythia8/150626_153552/0000/'
+sam["MinBias_TuneMBR_13TeV-pythia8"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMBR_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMBR_13TeV-pythia8/150626_153552/0000//'
 sam["MinBias_TuneMBR_13TeV-pythia8"]["json"]=''
 sam["MinBias_TuneMBR_13TeV-pythia8"]["lumiMinBias"]=1.273833692092672e-05
 sam["MinBias_TuneMBR_13TeV-pythia8"]["XS"]=78418400000.0
+sam["MinBias_TuneMBR_13TeV-pythia8"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMBR_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMBR_13TeV-pythia8/150626_153552/0000//'
 sam["MinBias_TuneMBR_13TeV-pythia8"]["DS"]='/MinBias_TuneMBR_13TeV-pythia8/RunIISpring15DR74-NoPURawReco_castor_MCRUN2_74_V8B-v1/GEN-SIM-RECO'
 
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]={}
@@ -36,9 +42,12 @@ sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["GT"]='MCRUN2_75_V5'
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["name"]='MinBias_TuneMBR_13TeV-pythia8_MagnetOff'
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["isData"]=False
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["numEvents"]=997146
+sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMBR_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMBR_13TeV-pythia8_MagnetOff/150626_153625/0000/'
+sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMBR_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMBR_13TeV-pythia8_MagnetOff/150626_153625/0000//'
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["json"]=''
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["lumiMinBias"]=1.271571467920794e-05
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["XS"]=78418400000.0
+sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMBR_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMBR_13TeV-pythia8_MagnetOff/150626_153625/0000//'
 sam["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"]["DS"]='/MinBias_TuneMBR_13TeV-pythia8/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO'
 
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]={}
@@ -47,9 +56,12 @@ sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["GT"]='MCRUN2_75_V5'
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["name"]='MinBias_TuneMonash13_13TeV-pythia8_MagnetOff'
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["isData"]=False
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["numEvents"]=953393
+sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMonash13_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMonash13_13TeV-pythia8_MagnetOff/150626_153608/0000/'
+sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMonash13_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMonash13_13TeV-pythia8_MagnetOff/150626_153608/0000//'
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["json"]=''
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["lumiMinBias"]=1.2157771645430154e-05
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["XS"]=78418400000.0
+sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneMonash13_13TeV-pythia8/Long_RunIILowPU_0T_20150625_MinBias_TuneMonash13_13TeV-pythia8_MagnetOff/150626_153608/0000//'
 sam["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"]["DS"]='/MinBias_TuneMonash13_13TeV-pythia8/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO'
 
 sam["MinBias_TuneZ2star_13TeV-pythia6"]={}
@@ -58,9 +70,12 @@ sam["MinBias_TuneZ2star_13TeV-pythia6"]["GT"]='MCRUN2_75_V5'
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["name"]='MinBias_TuneZ2star_13TeV-pythia6'
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["isData"]=False
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["numEvents"]=998098
+sam["MinBias_TuneZ2star_13TeV-pythia6"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneZ2star_13TeV-pythia6/Long_RunIILowPU_0T_20150625_MinBias_TuneZ2star_13TeV-pythia6/150626_153409/0000/'
+sam["MinBias_TuneZ2star_13TeV-pythia6"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneZ2star_13TeV-pythia6/Long_RunIILowPU_0T_20150625_MinBias_TuneZ2star_13TeV-pythia6/150626_153409/0000//'
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["json"]=''
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["lumiMinBias"]=1.275361615129057e-05
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["XS"]=78260000000.0
+sam["MinBias_TuneZ2star_13TeV-pythia6"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneZ2star_13TeV-pythia6/Long_RunIILowPU_0T_20150625_MinBias_TuneZ2star_13TeV-pythia6/150626_153409/0000//'
 sam["MinBias_TuneZ2star_13TeV-pythia6"]["DS"]='/MinBias_TuneZ2star_13TeV-pythia6/RunIISpring15DR74-NoPURawReco_castor_MCRUN2_74_V8B-v1/GEN-SIM-RECO'
 
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]={}
@@ -69,9 +84,12 @@ sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["GT"]='MCRUN2_75_V5'
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["name"]='MinBias_TuneZ2star_13TeV-pythia6_MagnetOff'
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["isData"]=False
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["numEvents"]=998082
+sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneZ2star_13TeV-pythia6/Long_RunIILowPU_0T_20150625_MinBias_TuneZ2star_13TeV-pythia6_MagnetOff/150626_153340/0000/'
+sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneZ2star_13TeV-pythia6/Long_RunIILowPU_0T_20150625_MinBias_TuneZ2star_13TeV-pythia6_MagnetOff/150626_153340/0000//'
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["json"]=''
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["lumiMinBias"]=1.2753411704574495e-05
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["XS"]=78260000000.0
+sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/MinBias_TuneZ2star_13TeV-pythia6/Long_RunIILowPU_0T_20150625_MinBias_TuneZ2star_13TeV-pythia6_MagnetOff/150626_153340/0000//'
 sam["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"]["DS"]='/MinBias_TuneZ2star_13TeV-pythia6/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO'
 
 sam["ReggeGribovPartonMC_13TeV-EPOS"]={}
@@ -80,9 +98,12 @@ sam["ReggeGribovPartonMC_13TeV-EPOS"]["GT"]='MCRUN2_75_V5'
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["name"]='ReggeGribovPartonMC_13TeV-EPOS'
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["isData"]=False
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["numEvents"]=998312
+sam["ReggeGribovPartonMC_13TeV-EPOS"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-EPOS/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-EPOS/150626_153355/0000/'
+sam["ReggeGribovPartonMC_13TeV-EPOS"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-EPOS/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-EPOS/150626_153355/0000//'
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["json"]=''
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["lumiMinBias"]=1.2730583638533814e-05
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["XS"]=78418400000.0
+sam["ReggeGribovPartonMC_13TeV-EPOS"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-EPOS/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-EPOS/150626_153355/0000//'
 sam["ReggeGribovPartonMC_13TeV-EPOS"]["DS"]='/ReggeGribovPartonMC_13TeV-EPOS/RunIISpring15DR74-NoPURawReco_castor_MCRUN2_74_V8B_ext1-v1/GEN-SIM-RECO'
 
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]={}
@@ -91,9 +112,12 @@ sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["GT"]='MCRUN2_75_V5'
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["name"]='ReggeGribovPartonMC_13TeV-EPOS_MagnetOff'
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["isData"]=False
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["numEvents"]=998671
+sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-EPOS/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-EPOS_MagnetOff/150626_153427/0000/'
+sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-EPOS/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-EPOS_MagnetOff/150626_153427/0000//'
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["json"]=''
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["lumiMinBias"]=1.2735161645736204e-05
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["XS"]=78418400000.0
+sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-EPOS/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-EPOS_MagnetOff/150626_153427/0000//'
 sam["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"]["DS"]='/ReggeGribovPartonMC_13TeV-EPOS/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO'
 
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]={}
@@ -102,9 +126,12 @@ sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["GT"]='MCRUN2_75_V5'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["name"]='ReggeGribovPartonMC_13TeV-QGSJetII'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["isData"]=False
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["numEvents"]=1000000
+sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-QGSJetII/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-QGSJetII/150626_153504/0000/'
+sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-QGSJetII/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-QGSJetII/150626_153504/0000//'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["json"]=''
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["lumiMinBias"]=1.2752109198861492e-05
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["XS"]=78418400000.0
+sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-QGSJetII/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-QGSJetII/150626_153504/0000//'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII"]["DS"]='/ReggeGribovPartonMC_13TeV-QGSJetII/RunIISpring15DR74-NoPURawReco_castor_MCRUN2_74_V8B-v1/GEN-SIM-RECO'
 
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]={}
@@ -113,9 +140,12 @@ sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["GT"]='MCRUN2_75_V5'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["name"]='ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["isData"]=False
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["numEvents"]=980585
+sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-QGSJetII/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff/150626_153443/0000/'
+sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-QGSJetII/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff/150626_153443/0000//'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["json"]=''
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["lumiMinBias"]=1.2504526998765596e-05
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["XS"]=78418400000.0
+sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ReggeGribovPartonMC_13TeV-QGSJetII/Long_RunIILowPU_0T_20150625_ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff/150626_153443/0000//'
 sam["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"]["DS"]='/ReggeGribovPartonMC_13TeV-QGSJetII/RunIISpring15DR74-NoPU0TRawReco_magnetOff_MCRUN2_740TV0-v1/GEN-SIM-RECO'
 
 sam["data_L1MinimumBias_Run2015A"]={}
@@ -124,9 +154,12 @@ sam["data_L1MinimumBias_Run2015A"]["GT"]='GR_R_75_V5A'
 sam["data_L1MinimumBias_Run2015A"]["name"]='data_L1MinimumBias_Run2015A'
 sam["data_L1MinimumBias_Run2015A"]["isData"]=True
 sam["data_L1MinimumBias_Run2015A"]["numEvents"]=752615
+sam["data_L1MinimumBias_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150625_data_L1MinimumBias_Run2015A/150626_153641/0000/'
+sam["data_L1MinimumBias_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150625_data_L1MinimumBias_Run2015A/150626_153641/0000//'
 sam["data_L1MinimumBias_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
 sam["data_L1MinimumBias_Run2015A"]["lumiMinBias"]=-1
 sam["data_L1MinimumBias_Run2015A"]["XS"]=-1
+sam["data_L1MinimumBias_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150625_data_L1MinimumBias_Run2015A/150626_153641/0000//'
 sam["data_L1MinimumBias_Run2015A"]["DS"]='/L1MinimumBias/Run2015A-PromptReco-v1/RECO'
 
 sam["data_ZeroBias_Run2015A"]={}
@@ -135,9 +168,12 @@ sam["data_ZeroBias_Run2015A"]["GT"]='GR_R_75_V5A'
 sam["data_ZeroBias_Run2015A"]["name"]='data_ZeroBias_Run2015A'
 sam["data_ZeroBias_Run2015A"]["isData"]=True
 sam["data_ZeroBias_Run2015A"]["numEvents"]=2001085
+sam["data_ZeroBias_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ZeroBias/Long_RunIILowPU_0T_20150625_data_ZeroBias_Run2015A/150626_153520/0000/'
+sam["data_ZeroBias_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ZeroBias/Long_RunIILowPU_0T_20150625_data_ZeroBias_Run2015A/150626_153520/0000//'
 sam["data_ZeroBias_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
 sam["data_ZeroBias_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias_Run2015A"]["XS"]=-1
+sam["data_ZeroBias_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ZeroBias/Long_RunIILowPU_0T_20150625_data_ZeroBias_Run2015A/150626_153520/0000//'
 sam["data_ZeroBias_Run2015A"]["DS"]='/ZeroBias/Run2015A-PromptReco-v1/RECO'
 
 

@@ -205,5 +205,7 @@ if not isData:
 
     process = CommonFSQFramework.Core.customizePAT.addPath(process, process.LowPtGenJetsReCluster)
 
-process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
+if isData:
+    process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
+    
 process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)

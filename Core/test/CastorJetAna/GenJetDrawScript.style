@@ -8,30 +8,59 @@
 h.SetLineWidth(3)
 h.SetMarkerSize(1.0)
 
-if hsample == "MinBias_TuneZ2star_13TeV-pythia6" or hsample == "MinBias_TuneZ2star_13TeV-pythia6_MagnetOff":
-    h.SetLineColor(kRed)
-    h.SetMarkerStyle(20)
-    h.SetMarkerColor(kRed)
-if hsample == "MinBias_TuneEE5C_13TeV-herwigpp":
+
+if "data" in hsample:
     h.SetLineColor(kBlack)
-    h.SetMarkerStyle(21)
     h.SetMarkerColor(kBlack)
-if hsample == "ReggeGribovPartonMC_13TeV-EPOS":
-    h.SetLineColor(kBlue)
-    h.SetMarkerStyle(22)
-    h.SetMarkerColor(kBlue)
-if hsample == "MinBias_TuneMonash13_13TeV-pythia8" or hsample == "MinBias_TuneMonash13_13TeV-pythia8_MagnetOff":
-    h.SetLineColor(kGreen)
-    h.SetMarkerStyle(23)
-    h.SetMarkerColor(kGreen)
-if hsample == "MinBias_TuneCUETP8M1_13TeV-pythia8" or hsample == "MinBias_TuneMBR_13TeV-pythia8_MagnetOff":
+
+if "MinimumBias" in hsample:
+    h.SetMarkerStyle(20)
+if "ZeroBias" in hsample:
+    h.SetMarkerStyle(21)
+
+if "QGSJetII" in hsample:
+    h.SetLineColor(kCyan)
+    h.SetMarkerColor(kCyan)
+
+if "EPOS" in hsample:
+    h.SetLineColor(kRed)
+    h.SetMarkerColor(kRed)
+
+if "TuneZ2star" in hsample:
     h.SetLineColor(kMagenta)
-    h.SetMarkerStyle(24)
     h.SetMarkerColor(kMagenta)
-if hsample == "ReggeGribovPartonMC_13TeV-QGSJetII":
-    h.SetLineColor(kYellow)
-    h.SetMarkerStyle(25)
-    h.SetMarkerColor(kYellow)
+
+if not "data" in hsample:
+    if "MagnetOff" in hsample:
+        h.SetMarkerStyle(23)
+    else:
+        h.SetMarkerStyle(26)
+
+
+# if hsample == "MinBias_TuneZ2star_13TeV-pythia6" or hsample == "MinBias_TuneZ2star_13TeV-pythia6_MagnetOff":
+#     h.SetLineColor(kRed)
+#     h.SetMarkerStyle(20)
+#     h.SetMarkerColor(kRed)
+# if hsample == "MinBias_TuneEE5C_13TeV-herwigpp":
+#     h.SetLineColor(kBlack)
+#     h.SetMarkerStyle(21)
+#     h.SetMarkerColor(kBlack)
+# if hsample == "ReggeGribovPartonMC_13TeV-EPOS":
+#     h.SetLineColor(kBlue)
+#     h.SetMarkerStyle(22)
+#     h.SetMarkerColor(kBlue)
+# if hsample == "MinBias_TuneMonash13_13TeV-pythia8" or hsample == "MinBias_TuneMonash13_13TeV-pythia8_MagnetOff":
+#     h.SetLineColor(kGreen)
+#     h.SetMarkerStyle(23)
+#     h.SetMarkerColor(kGreen)
+# if hsample == "MinBias_TuneCUETP8M1_13TeV-pythia8" or hsample == "MinBias_TuneMBR_13TeV-pythia8_MagnetOff":
+#     h.SetLineColor(kMagenta)
+#     h.SetMarkerStyle(24)
+#     h.SetMarkerColor(kMagenta)
+# if hsample == "ReggeGribovPartonMC_13TeV-QGSJetII":
+#     h.SetLineColor(kYellow)
+#     h.SetMarkerStyle(25)
+#     h.SetMarkerColor(kYellow)
 
 #
 # use the "cname" variable to set draw properties of the histograms per canvas e.g. plot ranges
@@ -44,80 +73,90 @@ if "hdNd" in cname:
     h.Scale( 1./h.GetBinWidth(1) )
     c.cd(1).SetLogy()
 
-if "hdNdPt" in cname:
+
+if cname == "hdNdEtaak4CaloJets":
     h.SetMaximum(1)
-    h.GetYaxis().SetTitle("(1/N_{ev})dN/dp_{T} [1/GeV/c]")
+    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#eta")
     h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("p_{T} [GeV/c]")
+    h.GetXaxis().SetTitle("#eta")
     h.GetXaxis().SetTitleOffset(1.2)
 
-if "hdNdE" in cname:
+if cname == "hdNdEak5CastorJets":
     h.SetMaximum(1)
+    h.SetMinimum(1e-5)
     h.GetYaxis().SetTitle("(1/N_{ev})dN/dE [1/GeV]")
     h.GetYaxis().SetTitleOffset(2.0)
     h.GetXaxis().SetTitle("E [GeV]")
     h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hNak4GenJets":
-    c.cd(1).SetLogy()
-    h.GetYaxis().SetTitle("N/N_{ev}")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("Number of Gen Jets")
-    h.GetXaxis().SetTitleOffset(1.2)    
+# if "hdNdPt" in cname:
+#     h.SetMaximum(1)
+#     h.GetYaxis().SetTitle("(1/N_{ev})dN/dp_{T} [1/GeV/c]")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("p_{T} [GeV/c]")
+#     h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hdNdPtak5CastorJets":
-    h.SetMaximum(100)
-    h.SetMinimum(1e-6)
+# if "hdNdE" in cname:
+#     h.SetMaximum(1)
+#     h.GetYaxis().SetTitle("(1/N_{ev})dN/dE [1/GeV]")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("E [GeV]")
+#     h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hdNdPtHotCasGenJet":
-    h.SetMaximum(100)
-    h.SetMinimum(1e-6)
+# if cname == "hNak4GenJets":
+#     c.cd(1).SetLogy()
+#     h.GetYaxis().SetTitle("N/N_{ev}")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("Number of Gen Jets")
+#     h.GetXaxis().SetTitleOffset(1.2)    
 
-if cname == "hdNdEtaak4GenJets":
-    h.SetMaximum(10)
-    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#eta")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("#eta")
-    h.GetXaxis().SetTitleOffset(1.2)
+# if cname == "hdNdPtak5CastorJets":
+#     h.SetMaximum(100)
+#     h.SetMinimum(1e-6)
 
-if cname == "hdNdEtaak4CaloJets":
-    h.SetMaximum(1e-1)
-    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#eta")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("#eta")
-    h.GetXaxis().SetTitleOffset(1.2)
+# if cname == "hdNdPtHotCasGenJet":
+#     h.SetMaximum(100)
+#     h.SetMinimum(1e-6)
 
-if cname == "hdNdDeltaPhiCasCenGenJet":
-    c.cd(1).SetLogy(False)
-    h.SetMaximum(1.5e-2)
-    h.SetMinimum(0)
-    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#Delta#phi [1/rad]")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("#Delta#phi [rad]")
-    h.GetXaxis().SetTitleOffset(1.2)
+# if cname == "hdNdEtaak4GenJets":
+#     h.SetMaximum(10)
+#     h.GetYaxis().SetTitle("(1/N_{ev})dN/d#eta")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("#eta")
+#     h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hdNdDeltaEtaCenCasGenJet":
-    h.SetMaximum(1e-2)
-    # h.SetMinimum(0)
-    h.GetYaxis().SetTitle("(1/N_{ev})dN/d#Delta#eta")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("#Delta#eta")
-    h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hdNdDeltaPtCenCasGenJet":
-    c.cd(1).SetLogy(False)
-    h.SetMaximum(8)
-    h.SetMinimum(0)
-    h.GetYaxis().SetTitle("1/N dN/d#Delta p_{T} [1/GeV/c]")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("#Delta p_{T} [GeV/c]")
-    h.GetXaxis().SetTitleOffset(1.2)
+# if cname == "hdNdDeltaPhiCasCenGenJet":
+#     c.cd(1).SetLogy(False)
+#     h.SetMaximum(1.5e-2)
+#     h.SetMinimum(0)
+#     h.GetYaxis().SetTitle("(1/N_{ev})dN/d#Delta#phi [1/rad]")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("#Delta#phi [rad]")
+#     h.GetXaxis().SetTitleOffset(1.2)
 
-if cname == "hDeltaPhiGenJetHotCasJet":
-    c.cd(1).SetLogy()
-    h.SetMaximum(5e5)
-    h.SetMinimum(10)
-    h.GetYaxis().SetTitle("N")
-    h.GetYaxis().SetTitleOffset(2.0)
-    h.GetXaxis().SetTitle("#Delta #phi")
-    h.GetXaxis().SetTitleOffset(1.2)
+# if cname == "hdNdDeltaEtaCenCasGenJet":
+#     h.SetMaximum(1e-2)
+#     # h.SetMinimum(0)
+#     h.GetYaxis().SetTitle("(1/N_{ev})dN/d#Delta#eta")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("#Delta#eta")
+#     h.GetXaxis().SetTitleOffset(1.2)
+
+# if cname == "hdNdDeltaPtCenCasGenJet":
+#     c.cd(1).SetLogy(False)
+#     h.SetMaximum(8)
+#     h.SetMinimum(0)
+#     h.GetYaxis().SetTitle("1/N dN/d#Delta p_{T} [1/GeV/c]")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("#Delta p_{T} [GeV/c]")
+#     h.GetXaxis().SetTitleOffset(1.2)
+
+# if cname == "hDeltaPhiGenJetHotCasJet":
+#     c.cd(1).SetLogy()
+#     h.SetMaximum(5e5)
+#     h.SetMinimum(10)
+#     h.GetYaxis().SetTitle("N")
+#     h.GetYaxis().SetTitleOffset(2.0)
+#     h.GetXaxis().SetTitle("#Delta #phi")
+#     h.GetXaxis().SetTitleOffset(1.2)
