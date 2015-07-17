@@ -70,7 +70,6 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
             CastorRecoJets = []
             for jet in self.fChain.ak5CastorJetsP4:
                 if jet.eta() > -5.2 or jet.eta() < -6.4: continue
-                if jet.pt() < 1.0: continue
                 self.hist["hdNdEak5CastorJets"].Fill(jet.e(), weight)
                 self.hist["hdNdPtak5CastorJets"].Fill(jet.pt(), weight)
 
@@ -210,8 +209,8 @@ if __name__ == "__main__":
     # sampleList = []
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
     # sampleList.append("data_ZeroBias_Run2015A")
-    maxFilesMC = 24
-    # maxFilesData = 1
+    maxFilesMC = 1
+    maxFilesData = 1
     # nWorkers = 1
 
 

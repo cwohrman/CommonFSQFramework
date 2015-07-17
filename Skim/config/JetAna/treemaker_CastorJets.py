@@ -13,7 +13,7 @@ else:
     if isData: print "Disabling MC-specific features for sample",s
 
 # for test purpose
-#isData = True
+# isData = False
 
 process = cms.Process("Treemaker")
 
@@ -33,7 +33,8 @@ if not isData:
     )
 if isData: 
     process.source = cms.Source("PoolSource",
-        fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias/RECO/PromptReco-v1/000/247/607/00000/52EA626D-9210-E511-843F-02163E01451D.root')
+        # fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias/RECO/PromptReco-v1/000/247/607/00000/52EA626D-9210-E511-843F-02163E01451D.root')
+        fileNames = cms.untracked.vstring("/store/data/Run2015A/CastorJets/RECO/PromptReco-v1/000/247/607/00000/0066B745-A010-E511-B055-02163E014374.root")
     )
 
 
@@ -55,57 +56,6 @@ print process.GlobalTag.globaltag
 # process.load("Configuration.StandardSequences.Reconstruction_cff")
 
 
-###############################################################################
-###############################################################################
-
-############################################################################
-# get custom CASTOR conditions to remove bad channels and gain corrections #
-############################################################################
-process.load("CondCore.DBCommon.CondDBSetup_cfi")
-process.CastorDbProducer = cms.ESProducer("CastorDbProducer")
-
-# when using data apply gain and quality corrections
-if isData:
-  process.es_ascii = cms.ESSource("CastorTextCalibrations",
-      input = cms.VPSet(
-        cms.PSet(
-            object = cms.string('Gains'),
-            file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
-        ),
-        cms.PSet(
-            object = cms.string('ChannelQuality'),
-            file = cms.FileInPath('data/quality__2015.txt')
-        )
-     )
-  )
-# else if it is MC then using only chanel quality changes
-else:
-  process.es_ascii = cms.ESSource("CastorTextCalibrations",
-      input = cms.VPSet(
-        cms.PSet(
-            object = cms.string('ChannelQuality'),
-            file = cms.FileInPath('data/quality__2015.txt')
-        )
-     )
-  )
-
-process.es_prefer_castor = cms.ESPrefer('CastorTextCalibrations','es_ascii')
-
-
-########################
-# Castor RecHit ReReco #
-########################
-process.load('RecoLocalCalo.Castor.Castor_cff')
-# construct the module which executes the RechitCorrector for data reconstructed in releases >= 4.2.X
-process.rechitcorrector = cms.EDProducer("RecHitCorrector",
-        rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
-        revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
-        doInterCalib = cms.bool(True) # don't do intercalibration, RecHitCorrector will only correct the EM response and remove BAD channels
-)
-process.CastorTowerReco.inputprocess = "rechitcorrector"
-process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
-###############################################################################
-###############################################################################
 
 
 ###############################################################################
@@ -176,6 +126,69 @@ process = CommonFSQFramework.Core.customizePAT.customize(process)
 # GT customization
 process = CommonFSQFramework.Core.customizePAT.customizeGT(process)
 
+###############################################################################
+###############################################################################
+
+############################################################################
+# get custom CASTOR conditions to remove bad channels and gain corrections #
+############################################################################
+process.load("CondCore.DBCommon.CondDBSetup_cfi")
+process.CastorDbProducer = cms.ESProducer("CastorDbProducer")
+
+# when using data apply gain and quality corrections
+if isData:
+  process.es_ascii = cms.ESSource("CastorTextCalibrations",
+      input = cms.VPSet(
+        # cms.PSet(
+        #     object = cms.string('Gains'),
+        #     file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
+        # ),
+        cms.PSet(
+            object = cms.string('ChannelQuality'),
+            file = cms.FileInPath('data/quality__2015.txt')
+        )
+     )
+  )
+# else if it is MC then using only chanel quality changes
+else:
+  process.es_ascii = cms.ESSource("CastorTextCalibrations",
+      input = cms.VPSet(
+        cms.PSet(
+            object = cms.string('ChannelQuality'),
+            file = cms.FileInPath('data/quality__2015.txt')
+        )
+     )
+  )
+
+process.es_prefer_castor = cms.ESPrefer('CastorTextCalibrations','es_ascii')
+###############################################################################
+###############################################################################
+
+###############################################################################
+###############################################################################
+
+########################
+# Castor RecHit ReReco #
+########################
+process.load('RecoLocalCalo.Castor.Castor_cff')
+# construct the module which executes the RechitCorrector for data reconstructed in releases >= 4.2.X
+if isData:
+    process.rechitcorrector = cms.EDProducer("RecHitCorrector",
+            rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
+            revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
+            doInterCalib = cms.bool(True) # do intercalibration
+    )
+else:
+    process.rechitcorrector = cms.EDProducer("RecHitCorrector",
+            rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
+            revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
+            doInterCalib = cms.bool(False) # don't do intercalibration, RecHitCorrector will only correct the EM response and remove BAD channels
+    )
+process.CastorTowerReco.inputprocess = "rechitcorrector"
+process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
+###############################################################################
+###############################################################################
+
 # define treeproducer
 process.JetCastor = cms.EDAnalyzer("CFFTreeProducer")
 
@@ -205,7 +218,6 @@ if not isData:
 
     process = CommonFSQFramework.Core.customizePAT.addPath(process, process.LowPtGenJetsReCluster)
 
-if isData:
-    process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
-    
+
+process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)    
 process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)

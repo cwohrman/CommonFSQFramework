@@ -78,6 +78,7 @@ def numEvents(ds):
     # data
     if "ZeroBias" in name(ds): return 2001085
     if "L1MinimumBias" in name(ds): return 752615
+    if "CastorJets" in name(ds): return 36204306
     
     return evts
 
