@@ -33,6 +33,7 @@ for root, dirs, files in os.walk(taskName):
     for d in dirs:
         fullDir = os.path.join(taskName, d)
         toExec = "crab " + command + " " + fullDir
+        print toExec
         os.system(toExec)
 
     break # maxdepth=1 needed
