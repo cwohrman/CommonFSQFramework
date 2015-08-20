@@ -154,12 +154,16 @@ sam["data_CastorJets_Run2015A"]["GT"]='GR_R_75_V5A'
 sam["data_CastorJets_Run2015A"]["name"]='data_CastorJets_Run2015A'
 sam["data_CastorJets_Run2015A"]["isData"]=True
 sam["data_CastorJets_Run2015A"]["numEvents"]=36204306
-sam["data_CastorJets_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000/'
-sam["data_CastorJets_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000//'
+# sam["data_CastorJets_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000/'
+# ========================================> on lxplus0084
+sam["data_CastorJets_Run2015A"]["pathSE"]='/tmp/cwohrman/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000/'
+# sam["data_CastorJets_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000//'
+sam["data_CastorJets_Run2015A"]["pathTrees"]='/tmp/cwohrman/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000/'
 sam["data_CastorJets_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
 sam["data_CastorJets_Run2015A"]["lumiMinBias"]=-1
 sam["data_CastorJets_Run2015A"]["XS"]=-1
-sam["data_CastorJets_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000//'
+# sam["data_CastorJets_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000//'
+sam["data_CastorJets_Run2015A"]["pathPAT"]='/tmp/cwohrman/Long_RunIILowPU_0T_20150701_data_CastorJets_Run2015A/150702_133430/0000/'
 sam["data_CastorJets_Run2015A"]["DS"]='/CastorJets/Run2015A-PromptReco-v1/RECO'
 
 sam["data_L1MinimumBias_Run2015A"]={}
@@ -168,12 +172,16 @@ sam["data_L1MinimumBias_Run2015A"]["GT"]='GR_R_75_V5A'
 sam["data_L1MinimumBias_Run2015A"]["name"]='data_L1MinimumBias_Run2015A'
 sam["data_L1MinimumBias_Run2015A"]["isData"]=True
 sam["data_L1MinimumBias_Run2015A"]["numEvents"]=752615
-sam["data_L1MinimumBias_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000/'
-sam["data_L1MinimumBias_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000//'
+# sam["data_L1MinimumBias_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000/'
+# ========================================> on lxplus0084
+sam["data_L1MinimumBias_Run2015A"]["pathSE"]='/tmp/cwohrman/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000/'
+# sam["data_L1MinimumBias_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000//'
+sam["data_L1MinimumBias_Run2015A"]["pathTrees"]='/tmp/cwohrman/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000/'
 sam["data_L1MinimumBias_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
 sam["data_L1MinimumBias_Run2015A"]["lumiMinBias"]=-1
 sam["data_L1MinimumBias_Run2015A"]["XS"]=-1
-sam["data_L1MinimumBias_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000//'
+# sam["data_L1MinimumBias_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/L1MinimumBias/Long_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000//'
+sam["data_L1MinimumBias_Run2015A"]["pathPAT"]='/tmp/cwohrmanLong_RunIILowPU_0T_20150701_data_L1MinimumBias_Run2015A/150702_134202/0000/'
 sam["data_L1MinimumBias_Run2015A"]["DS"]='/L1MinimumBias/Run2015A-PromptReco-v1/RECO'
 
 sam["data_ZeroBias_Run2015A"]={}

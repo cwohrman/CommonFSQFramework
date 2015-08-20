@@ -53,7 +53,8 @@ def crabJobs(ds):
     # define to run 100 crab jobs
     # make something more clever, based on number of events in the dataset:
     # require around 50000 events to be processed per job
-    return int(round(numEvents(ds)/50000.0))
+    # return int(round(numEvents(ds)/100000.0))
+    return 20
 
 
 def numEvents(ds):
@@ -77,7 +78,7 @@ def numEvents(ds):
     
     # data
     if "ZeroBias" in name(ds): return 2001085
-    if "L1MinimumBias" in name(ds): return 752615
+    if "L1MinimumBias" in name(ds): return 10000000
     if "CastorJets" in name(ds): return 36204306
     
     return evts

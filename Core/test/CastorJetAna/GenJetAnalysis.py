@@ -12,6 +12,8 @@ from array import *
 
 from math import pi
 from math import sqrt
+from math import log
+from math import exp
 
 def compareJetPt(x,y):
     if x.pt() < y.pt(): return 1
@@ -27,6 +29,12 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
         self.hist = {}
         self.hist["hNentries"] = ROOT.TH1F("hNentries","hNentries",3,-0.5,2.5)
 
+        self.hist["bx"] = ROOT.TH1F("bx",";bx",4000,0,4000)
+        self.hist["bx_MB"] = ROOT.TH1F("bx_MB","bx_MB",4000,0,4000)
+        self.hist["bx_MedJet"] = ROOT.TH1F("bx_MedJet","bx_MedJet",4000,0,4000)
+
+        self.hist["TrgCount"] = ROOT.TH1F("TrgCount","TrgCount",10,0,10)
+
         if not self.isData:
             self.hist["hNak5GenJets"]      =  ROOT.TH1F("hNak5GenJets","hNak5GenJets",100,-0.5, 99.5)
             self.hist["hdNdEak5GenJets"]   =  ROOT.TH1F("hdNdEak5GenJets","hdNdEak5GenJets",50,0,5000)
@@ -36,7 +44,17 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
             self.hist["hDeltaPhiGenJetHotCasJet"] = ROOT.TH1F("hDeltaPhiGenJetHotCasJet","hDeltaPhiGenJetHotCasJet",50,-pi,pi)
             self.hist["hEGenJetVsECasJet"]        = ROOT.TH2F("hEGenJetVsECasJet","hEGenJetVsECasJet",100,0,5000,100,0,5000)
             self.hist["hPtGenJetVsPtCasJet"]      = ROOT.TH2F("hPtGenJetVsPtCasJet","hPtGenJetVsPtCasJet",100,0,20,100,0,20)
-            self.hist["pECasJetGenReco"]          = ROOT.TProfile("pECasJetGenReco","pECasJetGenReco",50,0,5000)
+
+            bb = array('d',[])
+            nb = 3
+            bmin = 250.
+            bmax = 2500.
+            for i in range(nb+1):
+                b = log(bmin) + i*(log(bmax)-log(bmin))/nb
+                bb.append(exp(b))
+
+            self.hist["pECasJetGenReco"]          = ROOT.TProfile("pECasJetGenReco","pECasJetGenReco",len(bb)-1,bb)
+            self.hist["ptest"]                    = ROOT.TProfile("ptest","ptest",len(bb)-1,bb)
 
             self.hist["hdNdPtHotCasGenJet"]       = ROOT.TH1F("hdNdPtHotCasGenJet","hdNdPtHotCasGenJet",50,0,25)
             self.hist["hdNdPtHotCenGenJet"]       = ROOT.TH1F("hdNdPtHotCenGenJet","hdNdPtHotCenGenJet",50,0,25)
@@ -50,6 +68,26 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
         self.hist["hdNdEak5CastorJets"]  =  ROOT.TH1F("hdNdEak5CastorJets","hdNdEak5CastorJets",50,0,5000)
         self.hist["hdNdPtak5CastorJets"] =  ROOT.TH1F("hdNdPtak5CastorJets","hdNdPtak5CastorJets",50,0,25)
         self.hist["hNTowak5CastorJets"]  =  ROOT.TH1F("hNTowak5CastorJets","hNTowak5CastorJets",7,-0.5,6.5)
+
+        self.hist["hdNdEak5CastorJetsHOT"]             =  ROOT.TH1F("hdNdEak5CastorJetsHOT","hdNdEak5CastorJetsHOT",25,0,5000)
+        self.hist["hdNdEak5CastorJetsHOT_TrgMedJet"]   =  ROOT.TH1F("hdNdEak5CastorJetsHOT_TrgMedJet","hdNdEak5CastorJetsHOT_TrgMedJet",25,0,5000)
+        self.hist["hdNdEak5CastorJetsHOT_TrgHighJet"]  =  ROOT.TH1F("hdNdEak5CastorJetsHOT_TrgHighJet","hdNdEak5CastorJetsHOT_TrgHighJet",25,0,5000)
+        self.hist["hdNdEak5CastorJetsHOT_TrgZeroBias"] =  ROOT.TH1F("hdNdEak5CastorJetsHOT_TrgZeroBias","hdNdEak5CastorJetsHOT_TrgZeroBias",25,0,5000)
+        self.hist["hdNdEak5CastorJetsHOT_TrgMinBias"]  =  ROOT.TH1F("hdNdEak5CastorJetsHOT_TrgMinBias","hdNdEak5CastorJetsHOT_TrgMinBias",25,0,5000)
+        self.hist["hdNdEak5CastorJetsHOT_TrgRandom"]   =  ROOT.TH1F("hdNdEak5CastorJetsHOT_TrgRandom","hdNdEak5CastorJetsHOT_TrgRandom",25,0,5000)
+
+        self.hist["hdNdPtak5CastorJetsHOT"]             =  ROOT.TH1F("hdNdPtak5CastorJetsHOT","hdNdPtak5CastorJetsHOT",25,0,25)
+        self.hist["hdNdPtak5CastorJetsHOT_TrgMedJet"]   =  ROOT.TH1F("hdNdPtak5CastorJetsHOT_TrgMedJet","hdNdPtak5CastorJetsHOT_TrgMedJet",25,0,25)
+        self.hist["hdNdPtak5CastorJetsHOT_TrgHighJet"]  =  ROOT.TH1F("hdNdPtak5CastorJetsHOT_TrgHighJet","hdNdPtak5CastorJetsHOT_TrgHighJet",25,0,25)
+        self.hist["hdNdPtak5CastorJetsHOT_TrgZeroBias"] =  ROOT.TH1F("hdNdPtak5CastorJetsHOT_TrgZeroBias","hdNdPtak5CastorJetsHOT_TrgZeroBias",25,0,25)
+        self.hist["hdNdPtak5CastorJetsHOT_TrgMinBias"]  =  ROOT.TH1F("hdNdPtak5CastorJetsHOT_TrgMinBias","hdNdPtak5CastorJetsHOT_TrgMinBias",25,0,25)
+        self.hist["hdNdPtak5CastorJetsHOT_TrgRandom"]   =  ROOT.TH1F("hdNdPtak5CastorJetsHOT_TrgRandom","hdNdPtak5CastorJetsHOT_TrgRandom",25,0,25)
+
+
+        self.hist["htest"] = ROOT.TH2F("htest","htest",100,-pi,pi,100,-pi,3*pi)
+        self.hist["htest2"] = ROOT.TH2F("htest2","htest2",100,0,10,100,0,2*pi)
+
+
 
         for h in self.hist:
             self.hist[h].Sumw2()
@@ -105,22 +143,102 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
         return (jet.eta() > -5.7 or jet.eta() < -6.1 or jet.pt() < 1 or jet.e() < 250)
 
 
-    def testFcn(self,HottestCastorJet,nTowers):
+    def phiJetSectorRange(self,HottestCastorJet,nTowers):
         phi = HottestCastorJet.phi()
         if phi < 0: phi = 2*pi + phi
 
         sec_nbr_inf = int(8.*phi/pi)
         sec_nbr_sup = sec_nbr_inf+1
 
-        if nTower == 1:
-            phi_inf = self.movePhiRange(sec_nbr_inf*pi/8.)
-            phi_sup = self.movePhiRange(sec_nbr_sup*pi/8.)
-            return phi_inf, phi_sup
+        closer_border = int(16.*phi/pi)%2
 
-            if (8.*phi/pi)%sec_nbr_inf < 0.5:
-                return 0, 0
+        if nTowers == 2:
+            if closer_border == 0:
+                sec_nbr_inf -= 1
+            else:
+                sec_nbr_sup += 1
 
-        return 0, 0
+        if nTowers == 3:
+            sec_nbr_inf -= 1
+            sec_nbr_sup += 1
+
+        if nTowers == 4:
+            if closer_border == 0:
+                sec_nbr_inf -= 2
+                sec_nbr_sup += 1
+            else:
+                sec_nbr_inf -= 1
+                sec_nbr_sup += 2
+
+        sec_nbr_inf = (sec_nbr_inf+16)%16
+        sec_nbr_sup = (sec_nbr_sup+16)%16
+
+        phi_inf = self.movePhiRange( sec_nbr_inf*pi/8. )
+        phi_sup = self.movePhiRange( sec_nbr_sup*pi/8. )
+
+        phi_inf =  self.movePhiRange( sec_nbr_inf*pi/8. )
+        phi_sup =  self.movePhiRange( sec_nbr_sup*pi/8. )
+
+        return phi_inf, phi_sup
+
+    def insideJetSector(self,phi_part,HottestCastorJet,nTowers):
+        phi_inf, phi_sup = self.phiJetSectorRange(HottestCastorJet,nTowers)
+
+        if phi_part > phi_inf and phi_part < phi_sup:
+            return True
+        if phi_inf > 0 and phi_sup < 0:
+            if phi_part > phi_inf or phi_part < phi_sup:
+                return True
+
+        return False
+
+    def particleInRecoJetSectorNotGenCone(self,MergedGenCastorJet,HottestCastorJet,nTowers,radius=0.5):
+        for gpart in self.fChain.genParticlesp4:
+            if gpart.eta() > -5.2 or gpart.eta() < -6.6: continue
+
+            dGenJet = self.getDcone(MergedGenCastorJet,gpart)
+            if dGenJet < radius: continue
+
+            if self.insideJetSector(gpart.phi(),HottestCastorJet,nTowers):
+                return True
+
+        return False
+
+
+    def getPrescaleAlog100(self, run, lumi):
+        if run < 247612: return 10
+        if run == 247612:
+            if lumi < 34: return 10
+            return 100
+        if run < 247642: return 10
+        if run == 247642:
+            if lumi < 11: return -1 # means unknown don't use events
+            return 100
+        if run < 247644: return 100
+        if run == 247644:
+            if lumi < 46: return 100
+            return 10
+        if run < 247685: return 10
+        if run < 247702: return 11
+        if run == 247702:
+            if lumi < 72: return 11
+            if lumi < 124: return 5
+            return 2
+        if run < 247705: return 11
+        if run == 247705:
+            if lumi < 25: return 11
+            return 2
+        if run < 247920: return 11
+        if run == 247920:
+            if lumi < 115: return 11
+            return 1
+        if run < 247934: return 11
+        if run == 247934:
+            if lumi < 48: return 11
+            return 1
+
+        return 11
+
 
     def analyze(self):
         weight = 1
@@ -128,9 +246,34 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
         
         self.hist["hNentries"].Fill( 0, weight )
 
+        run  = self.fChain.run
+        lumi = self.fChain.lumi
+        bx   = self.fChain.bx
+
+        # if run >= 247685: return 0
+        if bx < 200: return 0
+
+        algo100prescale = self.getPrescaleAlog100(run,lumi)
+        if algo100prescale < 0: return 0
+
         NCastorRecoJets = self.fChain.ak5CastorJetsP4.size()
         if NCastorRecoJets == 0:
             return 0
+
+        CastorMedJetTrg  = self.fChain.trgl1L1GTAlgo[100]
+        CastorHighJetTrg = self.fChain.trgl1L1GTAlgo[101]
+        ZeroBiasTrg      = self.fChain.trgZeroBias
+        MinBiasTrg       = self.fChain.trgMinBias
+        RandomTrg        = self.fChain.trgRandom
+
+        self.hist["TrgCount"].Fill("all",1)
+        if CastorMedJetTrg:  self.hist["TrgCount"].Fill("MedJet",1)
+        if CastorHighJetTrg: self.hist["TrgCount"].Fill("HighJet",1)
+        if ZeroBiasTrg:      self.hist["TrgCount"].Fill("ZeroBias",1)
+        if MinBiasTrg:       self.hist["TrgCount"].Fill("MinBias",1)
+        if RandomTrg:        self.hist["TrgCount"].Fill("RndTrg",1)
+        if self.fChain.trgCastorMedJet: self.hist["TrgCount"].Fill("MedJet_HLT",1)
+        if self.fChain.trgCastorHighJet: self.hist["TrgCount"].Fill("HighJet_HLT",1)
 
         CastorRecoJets = []
         for ijet in xrange(0,NCastorRecoJets):
@@ -141,10 +284,41 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
             self.hist["hdNdPtak5CastorJets"].Fill(jet.pt(), weight)
             self.hist["hNTowak5CastorJets"].Fill(nTow, weight)
 
-            if self.jetPreCut(jet): continue
+            # if self.jetPreCut(jet): continue
             CastorRecoJets.append([jet,nTow])
 
         CastorRecoJets.sort(cmp=compareSpecialListJetPt)
+
+        trgpsc_weight = 1
+        if CastorMedJetTrg: trgpsc_weight = algo100prescale
+
+        if len(CastorRecoJets) > 0:
+            jet = CastorRecoJets[0][0]
+            nTow = CastorRecoJets[0][1]
+
+            # if nTow == 2:
+            if MinBiasTrg:
+                self.hist["hdNdEak5CastorJetsHOT"].Fill(jet.e(), weight)
+                self.hist["hdNdPtak5CastorJetsHOT"].Fill(jet.pt(), weight)
+                self.hist["bx"].Fill( bx, weight )
+
+            if CastorMedJetTrg and MinBiasTrg: 
+                self.hist["hdNdEak5CastorJetsHOT_TrgMedJet"].Fill(jet.e(), weight)
+                self.hist["hdNdPtak5CastorJetsHOT_TrgMedJet"].Fill(jet.pt(), weight)
+                self.hist["bx_MedJet"].Fill( bx, weight )
+            if CastorHighJetTrg and CastorMedJetTrg and MinBiasTrg:
+                self.hist["hdNdEak5CastorJetsHOT_TrgHighJet"].Fill(jet.e(), weight)
+                self.hist["hdNdPtak5CastorJetsHOT_TrgHighJet"].Fill(jet.pt(), weight)
+            if ZeroBiasTrg: 
+                self.hist["hdNdEak5CastorJetsHOT_TrgZeroBias"].Fill(jet.e(), weight)
+                self.hist["hdNdPtak5CastorJetsHOT_TrgZeroBias"].Fill(jet.pt(), weight)
+            if MinBiasTrg: 
+                self.hist["hdNdEak5CastorJetsHOT_TrgMinBias"].Fill(jet.e(), weight)
+                self.hist["hdNdPtak5CastorJetsHOT_TrgMinBias"].Fill(jet.pt(), weight)
+                self.hist["bx_MB"].Fill( bx, weight )
+            if RandomTrg: 
+                self.hist["hdNdEak5CastorJetsHOT_TrgRandom"].Fill(jet.e(), weight)
+                self.hist["hdNdPtak5CastorJetsHOT_TrgRandom"].Fill(jet.pt(), weight)
 
         if not self.isData:
             num = self.fChain.ak5GenJetsp4.size()
@@ -163,6 +337,17 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
                 mindphi = 0.2
                 HottestCastorJet = CastorRecoJets[0][0]
                 NTowerHotCastorJet = CastorRecoJets[0][1]
+                # NTowerHotCastorJet = 4
+
+                phi_inf, phi_sup = self.phiJetSectorRange(HottestCastorJet,NTowerHotCastorJet)
+                # self.hist["htest"].Fill(HottestCastorJet.phi(), phi_inf, weight )
+                # self.hist["htest"].Fill(HottestCastorJet.phi(), phi_sup, weight )
+                # self.hist["htest2"].Fill(NTowerHotCastorJet, abs(phi_sup-phi_inf))
+
+                # for iphi in xrange(-320,320):
+                #     phi = iphi/100.
+                #     if self.insideJetSector(phi,HottestCastorJet,NTowerHotCastorJet):
+                #         self.hist["htest"].Fill(HottestCastorJet.phi(),phi)
 
                 for jet in self.fChain.ak5GenJetsp4:
                     if self.jetPreCut(jet): continue
@@ -180,6 +365,13 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
 
                 if MergedGenCastorJet and isIsolated:
                     if self.particleInRecoNotGenCone(MergedGenCastorJet,HottestCastorJet):
+                        isIsolated = False
+
+                if MergedGenCastorJet and isIsolated:                
+                    self.hist["ptest"].Fill( HottestCastorJet.e(), MergedGenCastorJet.e()/HottestCastorJet.e(), weight )
+
+                if MergedGenCastorJet and isIsolated:
+                    if self.particleInRecoJetSectorNotGenCone(MergedGenCastorJet,HottestCastorJet,NTowerHotCastorJet):
                         isIsolated = False
 
                 if MergedGenCastorJet and isIsolated:
@@ -299,8 +491,10 @@ if __name__ == "__main__":
     # debug config:
     # Run printTTree.py alone to get the samples list
     sampleList = []
-    sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
+    # sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
     # sampleList.append("data_ZeroBias_Run2015A")
+    sampleList.append("data_L1MinimumBias_Run2015A")
+    sampleList.append("data_CastorJets_Run2015A")
     # maxFilesMC = 1
     # maxFilesData = 1
     # nWorkers = 1
