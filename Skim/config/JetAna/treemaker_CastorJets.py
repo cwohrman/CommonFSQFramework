@@ -19,7 +19,7 @@ process = cms.Process("Treemaker")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1000))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10000))
 
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
@@ -139,10 +139,10 @@ process.CastorDbProducer = cms.ESProducer("CastorDbProducer")
 if isData:
   process.es_ascii = cms.ESSource("CastorTextCalibrations",
       input = cms.VPSet(
-        # cms.PSet(
-        #     object = cms.string('Gains'),
-        #     file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
-        # ),
+        cms.PSet(
+            object = cms.string('Gains'),
+            file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
+        ),
         cms.PSet(
             object = cms.string('ChannelQuality'),
             file = cms.FileInPath('data/quality__2015.txt')
@@ -208,6 +208,7 @@ if not isData:
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloRecHitViewsConfigs.get(["HBHERecHitView","HFRecHitView"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloTowerViewsConfigs.get(["CaloTowerView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView"]))
+# process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView","CastorRecHitViewBasic"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.PFObjectsViewsConfigs.get(["PFCandidateView","ecalPFClusterView","hcalPFClusterView","hfPFClusterView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.TriggerResultsViewsConfigs.get(["CastorSpecialJetTriggerResultsView","L1GTriggerResultsView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.JetViewsConfigs.get(["JetViewAK4Calo"]))

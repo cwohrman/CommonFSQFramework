@@ -12,7 +12,7 @@ config.section_("Data")
 config.Data.inputDataset = '/A/B/C'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased' # alt: LumiBased
-config.Data.unitsPerJob = 200000
+config.Data.unitsPerJob = 100000
 # config.Data.totalUnits = 20000000 # havent worked last time, use lumi mask?
 #config.Data.totalUnits = 10000 # havent worked last time, use lumi mask?
 #config.Data.lumiMask = "lumiMask.json"
