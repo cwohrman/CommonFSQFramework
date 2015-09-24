@@ -77,7 +77,7 @@ for s in sampleListTodo:
 
     # used standard
     pycfgextra.append("config.Data.splitting='LumiBased'")
-    pycfgextra.append("config.Data.unitsPerJob=25")
+    pycfgextra.append("config.Data.unitsPerJob=40")
     #
 
     # used for tests
