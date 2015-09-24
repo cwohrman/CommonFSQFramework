@@ -5,7 +5,7 @@ import os
 isData = True
 
 if "TMFSampleName" not in os.environ:
-    print "TMFSampleName not found, assuming we are running on MC"
+    print "TMFSampleName not found, assuming we are running on RECO data"
 else:
     s = os.environ["TMFSampleName"]
     sampleList=CommonFSQFramework.Core.Util.getAnaDefinition("sam")
@@ -19,7 +19,7 @@ process = cms.Process("Treemaker")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10000))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1000))
 
 process.MessageLogger.cerr.FwkReport.reportEvery = 1000
 process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
@@ -141,7 +141,8 @@ if isData:
       input = cms.VPSet(
         cms.PSet(
             object = cms.string('Gains'),
-            file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
+            # file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
+            file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_20150923.txt')
         ),
         cms.PSet(
             object = cms.string('ChannelQuality'),
@@ -177,6 +178,8 @@ if isData:
             rechitLabel = cms.InputTag("castorreco","","RECO"), # choose the original RecHit collection
             revertFactor = cms.double(1), # this is the factor to go back to the original fC - not needed when data is already intercalibrated
             doInterCalib = cms.bool(True) # do intercalibration
+            # For HighJet Trigger Test use not intercalib jets but still remove bad channels because some of them had really bad response
+            # doInterCalib = cms.bool(False) # do intercalibration
     )
 else:
     process.rechitcorrector = cms.EDProducer("RecHitCorrector",
@@ -189,8 +192,26 @@ process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
 ###############################################################################
 ###############################################################################
 
+
+
+###############################################################################
+###############################################################################
+
+########################
+# Castor Jet-pT Filter #
+########################
+process.CastorJetFilter = cms.EDFilter("CastorJetFilter",
+    minCastorJetPt = cms.double(1.),
+    minCastorJetEnergy = cms.double(250.),
+    jetRadius = cms.double(0.5)
+)
+###############################################################################
+###############################################################################
+
+
 # define treeproducer
 process.JetCastor = cms.EDAnalyzer("CFFTreeProducer")
+# process.FiltererdTree = cms.Path(process.CastorJetFilter*process.JetCastor)
 
 import CommonFSQFramework.Core.VerticesViewsConfigs
 import CommonFSQFramework.Core.CaloRecHitViewsConfigs
@@ -207,8 +228,9 @@ if not isData:
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.VerticesViewsConfigs.get(["VerticesView"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloRecHitViewsConfigs.get(["HBHERecHitView","HFRecHitView"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloTowerViewsConfigs.get(["CaloTowerView"]))
+# Add also Basic Castor RecHits to Skimmed tree also for Test purpose
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView"]))
-# process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView","CastorRecHitViewBasic"]))
+# process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView","CastorRecHitViewFull"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.PFObjectsViewsConfigs.get(["PFCandidateView","ecalPFClusterView","hcalPFClusterView","hfPFClusterView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.TriggerResultsViewsConfigs.get(["CastorSpecialJetTriggerResultsView","L1GTriggerResultsView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.JetViewsConfigs.get(["JetViewAK4Calo"]))
@@ -220,5 +242,7 @@ if not isData:
     process = CommonFSQFramework.Core.customizePAT.addPath(process, process.LowPtGenJetsReCluster)
 
 
-process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)    
+
+process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
 process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)
+# process = CommonFSQFramework.Core.customizePAT.addPath(process, process.FiltererdTree)

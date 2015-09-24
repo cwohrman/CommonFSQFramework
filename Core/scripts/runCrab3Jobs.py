@@ -74,8 +74,17 @@ for s in sampleListTodo:
   
   if isData:
     print isData, sampleList[s]["json"]
+
+    # used standard
     pycfgextra.append("config.Data.splitting='LumiBased'")
-    pycfgextra.append("config.Data.unitsPerJob=40")
+    pycfgextra.append("config.Data.unitsPerJob=25")
+    #
+
+    # used for tests
+    # pycfgextra.append("config.Data.splitting='EventAwareLumiBased'")
+    # pycfgextra.append("config.Data.unitsPerJob=500000")
+    # 
+
     jsonFile=edm.FileInPath(sampleList[s]["json"])
     pycfgextra.append("config.Data.lumiMask='"+jsonFile.fullPath()+"'")
     

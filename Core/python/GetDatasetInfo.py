@@ -16,6 +16,7 @@ import distutils.spawn
 import subprocess
 
 def validateRootFile(fname, q):
+    # print "Validate file: " + fname
     rootFile = ROOT.TFile.Open(fname,"r")
     infoHisto = rootFile.Get("infoHisto/cntHisto")
     ret = {}
@@ -194,24 +195,28 @@ def getTreeFilesAndNormalizations(maxFilesMC = None, maxFilesData = None, quiet 
             if localAccess:
                 if not quiet: print tab, "path to trees:",sampleList[s]["pathTrees"]
                 if not quiet: print tab, "path to trees taken from 'sampleList[s][\"pathTrees\"]' variable"
-		if not "eos/cms" in sampleList[s]["pathTrees"]:
+                if not "eos/cms" in sampleList[s]["pathTrees"]:
                     for dirpath, dirnames, filenames in os.walk(sampleList[s]["pathTrees"]):
                         for f in filenames:
                             if not f.startswith("trees_"): continue
                             if not f.endswith(".root"): continue
                             fname = dirpath.replace("//","/") + f   # somehow root doesnt like // at the begining
+                            # print localROOTPrefix+fname
                             fileListUnvalidated.add(localROOTPrefix+fname)
-		if "eos/cms" in sampleList[s]["pathTrees"]:
-		    # only works on lxplus...
-		    lscomm = ["xrd", "eoscms", "ls", sampleList[s]["pathTrees"]]
-		    proc = subprocess.Popen(lscomm, stdout=subprocess.PIPE)
-		    for line in iter(proc.stdout.readline,''):
-		        ifile = line.strip()
-			if "trees_" not in ifile: continue
-			if ".root" not in ifile: continue
-			filename = ifile.split("//")[-1]
-			fileListUnvalidated.add("root://eoscms/"+sampleList[s]["pathTrees"]+filename)
-			
+                if "eos/cms" in sampleList[s]["pathTrees"]:
+                    dirname = sampleList[s]["pathTrees"].replace("/root://eoscms.cern.ch/","")
+                    # print dirname
+                    # only works on lxplus...
+                    lscomm = ["xrd", "eoscms", "ls", dirname]
+                    proc = subprocess.Popen(lscomm, stdout=subprocess.PIPE)
+                    for line in iter(proc.stdout.readline,''):
+                        ifile = line.strip()
+                        if "trees_" not in ifile: continue
+                        if ".root" not in ifile: continue
+                        filename = ifile.split("//")[-1]
+                        # print "root://eoscms/"+dirname+filename
+                        fileListUnvalidated.add("root://eoscms/"+dirname+filename)
+
             elif isXrootdAccess:
                 if not quiet: print tab, "will access trees from:",sampleList[s]["pathSE"]
                 # Warning: duplicated from copyAnaData. Fixme
