@@ -25,3 +25,4 @@ config.Data.publishDataName = 'HW_CastorJets'
 config.section_("Site")
 config.Site.storageSite = 'T2_CH_CERN'
 config.Data.outLFNDirBase = '/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets'
+# config.Data.outLFNDirBase = '/store/group/phys_heavyions/cwohrman/CFF/CastorJets'

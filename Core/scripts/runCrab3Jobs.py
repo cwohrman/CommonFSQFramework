@@ -77,7 +77,9 @@ for s in sampleListTodo:
 
     # used standard
     pycfgextra.append("config.Data.splitting='LumiBased'")
-    pycfgextra.append("config.Data.unitsPerJob=40")
+    pycfgextra.append("config.Data.unitsPerJob=20")
+    # need to be small for castor jet sample
+    # pycfgextra.append("config.Data.unitsPerJob=9")
     #
 
     # used for tests

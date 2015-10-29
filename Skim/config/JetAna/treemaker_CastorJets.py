@@ -13,7 +13,7 @@ else:
     if isData: print "Disabling MC-specific features for sample",s
 
 # for test purpose
-# isData = False
+# isData = True
 
 process = cms.Process("Treemaker")
 
@@ -29,7 +29,9 @@ if not isData:
     process.source = cms.Source("PoolSource",
         # fileNames = cms.untracked.vstring('/store/user/hvanhaev/ZeroBias1/Run2015A-v1_RERECO_Run247324_GR_P_V54_withCustomCond-v1/150608_213851/0000/output_data_rereco_1.root')
         #fileNames = cms.untracked.vstring('/store/user/hvanhaev/MinBias_TuneMonash13_13TeV-pythia8/RunIISpring15DR74-NoPU0T_MCRUN2_740TV0_step2-v2/150610_055012/0000/step2_RAW2DIGI_L1Reco_RECO_1.root')
-        fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/ReggeGribovPartonMC_13TeV-EPOS/GEN-SIM-RECO/NoPURawReco_castor_MCRUN2_74_V8B-v1/10000/BC62D29E-7707-E511-A6D9-AC853D9F5344.root')
+        # fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/ReggeGribovPartonMC_13TeV-EPOS/GEN-SIM-RECO/NoPURawReco_castor_MCRUN2_74_V8B-v1/10000/BC62D29E-7707-E511-A6D9-AC853D9F5344.root')
+        # fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/ReggeGribovPartonMC_13TeV-EPOS/GEN-SIM-RECO/NoPURawReco_castor_MCRUN2_74_V8B_ext1-v1/00000/5E628F10-B40E-E511-BB28-008CFA1111D0.root')
+        fileNames = cms.untracked.vstring('/store/mc/RunIISpring15DR74/ReggeGribovPartonMC_castorJet_13TeV-EPOS/AODSIM/NoPU_castor_MCRUN2_74_V8-v2/00000/C40F2FBD-B007-E511-9F1E-001E67397215.root')
     )
 if isData: 
     process.source = cms.Source("PoolSource",
@@ -142,11 +144,12 @@ if isData:
         cms.PSet(
             object = cms.string('Gains'),
             # file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
-            file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_20150923.txt')
+            file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_AdjustToMeanFiveModInterCalibValues_20151021.txt')
         ),
         cms.PSet(
             object = cms.string('ChannelQuality'),
-            file = cms.FileInPath('data/quality__2015.txt')
+            # file = cms.FileInPath('data/quality__2015.txt')
+            file = cms.FileInPath('data/quality__2015_FirstFiveMod.txt')
         )
      )
   )
@@ -229,8 +232,8 @@ if not isData:
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloRecHitViewsConfigs.get(["HBHERecHitView","HFRecHitView"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CaloTowerViewsConfigs.get(["CaloTowerView"]))
 # Add also Basic Castor RecHits to Skimmed tree also for Test purpose
-process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView"]))
-# process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView","CastorRecHitViewFull"]))
+# process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView"]))
+process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView","CastorRecHitViewFull"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.PFObjectsViewsConfigs.get(["PFCandidateView","ecalPFClusterView","hcalPFClusterView","hfPFClusterView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.TriggerResultsViewsConfigs.get(["CastorSpecialJetTriggerResultsView","L1GTriggerResultsView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.JetViewsConfigs.get(["JetViewAK4Calo"]))

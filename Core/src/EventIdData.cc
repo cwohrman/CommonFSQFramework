@@ -202,10 +202,17 @@ void EventIdData::fillSpecific(const edm::Event& iEvent, const edm::EventSetup& 
     
     // get the first (primary?) simulated vertex from Geant4
     edm::Handle<edm::SimVertexContainer> simVertexCollection;
-    iEvent.getByLabel("g4SimHits", simVertexCollection);
-    const SimVertex simPVh = *(simVertexCollection->begin());
-    setF("simvtxx",simPVh.position().x());
-    setF("simvtxy",simPVh.position().y());
-    setF("simvtxz",simPVh.position().z());
+    try {
+        iEvent.getByLabel("g4SimHits", simVertexCollection);
+        const SimVertex simPVh = *(simVertexCollection->begin());
+        setF("simvtxx",simPVh.position().x());
+        setF("simvtxy",simPVh.position().y());
+        setF("simvtxz",simPVh.position().z());
+    } catch (...) {
+        // std::cout << " An exception was thrown when accessing SimVertexContainer object. SimVertex position is set to 0" << std::endl;
+        setF("simvtxx",0.0);
+        setF("simvtxy",0.0);
+        setF("simvtxz",0.0);
+    }
 
 }

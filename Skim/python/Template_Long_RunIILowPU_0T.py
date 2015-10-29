@@ -91,6 +91,9 @@ def numEvents(ds):
         if "HF8" in name(ds): return 8449349
         return 752615
     
+    if "ZeroBias" in name(ds):
+        return 36297806
+
     return evts
 
 def GT(ds):
