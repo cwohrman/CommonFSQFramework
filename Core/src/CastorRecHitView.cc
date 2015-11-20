@@ -33,6 +33,7 @@ void CastorRecHitView::fillSpecific(const edm::Event& iEvent, const edm::EventSe
 
    edm::Handle< edm::SortedCollection<CastorRecHit,edm::StrictWeakOrdering<CastorRecHit> > > castorRecHits;
    iEvent.getByLabel("castorreco",castorRecHits);  
+   // iEvent.getByLabel("rechitcorrector",castorRecHits);  
 
    // retrieve the channel quality lists from database
    edm::ESHandle<CastorChannelQuality> p;
