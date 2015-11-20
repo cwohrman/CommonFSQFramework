@@ -353,12 +353,12 @@ sam["data_MelIntCalib_ZeroBias2_Run2015A"]["GT"]='GR_R_75_V5A'
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["name"]='data_MelIntCalib_ZeroBias2_Run2015A'
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["isData"]=True
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["numEvents"]=8450456
-sam["data_MelIntCalib_ZeroBias2_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets/ZeroBias2/Long_RunIILowPU_0T_20150820_data_ZeroBias2_Run2015A/151023_112006/0000/'
-sam["data_MelIntCalib_ZeroBias2_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets/ZeroBias2/Long_RunIILowPU_0T_20150820_data_ZeroBias2_Run2015A/151023_112006/0000//'
+sam["data_MelIntCalib_ZeroBias2_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets/ZeroBias2/Long_RunIILowPU_0T_20150820_data_ZeroBias2_Run2015A/151105_144714/0000/'
+sam["data_MelIntCalib_ZeroBias2_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets/ZeroBias2/Long_RunIILowPU_0T_20150820_data_ZeroBias2_Run2015A/151105_144714/0000//'
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["lumiMinBias"]=-1
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["XS"]=-1
-sam["data_MelIntCalib_ZeroBias2_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets/ZeroBias2/Long_RunIILowPU_0T_20150820_data_ZeroBias2_Run2015A/151023_112006/0000//'
+sam["data_MelIntCalib_ZeroBias2_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/InterCalib_TwentyFifteen_CastorJets/ZeroBias2/Long_RunIILowPU_0T_20150820_data_ZeroBias2_Run2015A/151105_144714/0000//'
 sam["data_MelIntCalib_ZeroBias2_Run2015A"]["DS"]='/ZeroBias2/Run2015A-PromptReco-v1/RECO'
 
 
