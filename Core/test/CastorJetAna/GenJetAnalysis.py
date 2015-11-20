@@ -121,6 +121,23 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
             self.hist["hdNDeltaEtadPtHotCasRegionGenJet"] = ROOT.TH2F("hdNDeltaEtadPtHotCasRegionGenJet","hdNDeltaEtadPtHotCasRegionGenJet",nptbin,ptmin,ptmax,24,0,1.2)
             self.hist["hdNDeltaEtadPtHotCasRegionGenRecoJet"] = ROOT.TH2F("hdNDeltaEtadPtHotCasRegionGenRecoJet","hdNDeltaEtadPtHotCasRegionGenRecoJet",nptbin,ptmin,ptmax,24,0,1.2)
 
+            for ideta in xrange(0,15):
+                for idphi in xrange(0,6):
+                    str_name_1 = "hRM_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_1] = ROOT.TH2F(str_name_1,str_name_1,nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
+                    str_name_2 = "hRM_Count_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_2] = ROOT.TH1F(str_name_2,str_name_2,10,0,10)
+                    str_name_3 = "hRM_Pt_RecoJet_NoFake_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_3] = ROOT.TH1F(str_name_3,str_name_3,nptbin,ptmin,ptmax)
+                    str_name_4 = "hRM_Pt_RecoJet_Fake_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_4] = ROOT.TH1F(str_name_4,str_name_4,nptbin,ptmin,ptmax)
+                    str_name_5 = "hRM_Pt_RecoJet_Ratio_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_5] = ROOT.TH1F(str_name_5,str_name_5,nptbin,ptmin,ptmax)
+                    str_name_6 = "hRM_Pt_RecoJet_Misses_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_6] = ROOT.TH1F(str_name_6,str_name_6,nptbin,ptmin,ptmax)
+                    str_name_7 = "hRM_Pt_RecoJet_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
+                    self.hist[str_name_7] = ROOT.TH1F(str_name_7,str_name_7,nptbin,ptmin,ptmax)
+
         self.hist["hdNdEak5CastorJetsHOT_Only"]            =  ROOT.TH1F("hdNdEak5CastorJetsHOT_Only","hdNdEak5CastorJetsHOT_Only",nebin,emin,emax)
         self.hist["hdNdEak5CastorJetsHOT_Only_TrgMedJet"]  =  ROOT.TH1F("hdNdEak5CastorJetsHOT_Only_TrgMedJet","hdNdEak5CastorJetsHOT_Only_TrgMedJet",nebin,emin,emax)
         self.hist["hdNdEak5CastorJetsHOT_Only_TrgHighJet"] =  ROOT.TH1F("hdNdEak5CastorJetsHOT_Only_TrgHighJet","hdNdEak5CastorJetsHOT_Only_TrgHighJet",nebin,emin,emax)
@@ -768,6 +785,54 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
                     self.hist["hdNdENotMergedCasJet"].Fill( HottestCastorJet.e() )
                     self.hist["hdNdPtNotMergedCasJet"].Fill( HottestCastorJet.pt() )
 
+
+            mindphi = 0.5
+            mindeta = 0.5
+            dphi = 10.0
+            # for ijet in xrange(0,len(CastorRecoJets)):
+            for ideta in xrange(0,15):
+                for idphi in xrange(0,6):
+                    str_name_1 = "hRM_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
+                    str_name_2 = "hRM_Count_{de}_{dp}".format(de=ideta,dp=idphi)
+                    str_name_3 = "hRM_Pt_RecoJet_NoFake_{de}_{dp}".format(de=ideta,dp=idphi)
+                    str_name_4 = "hRM_Pt_RecoJet_Fake_{de}_{dp}".format(de=ideta,dp=idphi)
+                    str_name_5 = "hRM_Pt_RecoJet_Ratio_{de}_{dp}".format(de=ideta,dp=idphi)
+                    str_name_6 = "hRM_Pt_RecoJet_Misses_{de}_{dp}".format(de=ideta,dp=idphi)
+                    str_name_7 = "hRM_Pt_RecoJet_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
+                    mindeta = float(ideta)/10.
+                    mindphi = float(idphi)/10.
+                    # used_genjet_list = []
+                    if len(CastorRecoJets) > 0:
+                        cjet = CastorRecoJets[0][0]
+                        mgjet = None # merged gen jet
+                        hotgenjet = None # hottest gen jet
+                        for gjet in self.fChain.ak5GenJetsp4:
+                            # if gjet.eta() > -5.9+mindeta or gjet.eta() < -6.6-mindeta:
+                            if gjet.eta() > -5.9+mindeta or gjet.eta() < -5.9-mindeta:
+                                continue
+                            if not hotgenjet: hotgenjet = gjet
+                            if hotgenjet.pt() < gjet.pt(): hotgenjet = gjet
+                            # if gjet in used_genjet_list:
+                                # continue
+                            dphi = abs(self.getDphi(cjet,gjet))
+                            if dphi < mindphi:
+                                mgjet = gjet
+                        if mgjet:
+                            self.hist[str_name_1].Fill(cjet.pt(),mgjet.pt(),weight)
+                            self.hist[str_name_2].Fill("no fake",1)
+                            self.hist[str_name_3].Fill(cjet.pt(), weight)
+                            # used_genjet_list.append(mgjet)
+                            if not mgjet == hotgenjet and hotgenjet:
+                                self.hist[str_name_6].Fill(hotgenjet.pt(),weight)
+                                self.hist[str_name_7].Fill(hotgenjet.pt(),weight)
+                        else:
+                            self.hist[str_name_2].Fill("fake",1)
+                            self.hist[str_name_4].Fill(cjet.pt(), weight)
+                            self.hist[str_name_5].Fill(cjet.pt(), weight)
+                            if hotgenjet: 
+                                self.hist[str_name_6].Fill(hotgenjet.pt(),weight)
+                                self.hist[str_name_7].Fill(hotgenjet.pt(),weight)
+
         for jet_eta in self.fChain.PFAK4Caloeta:
             self.hist["hdNdEtaak4CaloJets"].Fill(jet_eta, weight)
 
@@ -893,6 +958,7 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
                         deta = CenJet.eta()-CasJet.eta()
                         self.hist["hdNdDeltaEtaCenCasGenRecoJet"].Fill( deta, weight )
 
+
         return 1
 
 
@@ -912,7 +978,16 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
                 if not "TH2" in o.ClassName():
                     continue
             histos[o.GetName()]=o
-            print " TH1 histogram in output: ", o.GetName()
+            # print " TH1 histogram in output: ", o.GetName()
+
+        for ideta in xrange(0,15):
+            for idphi in xrange(0,6):
+                str_name_3 = "hRM_Pt_RecoJet_NoFake_{de}_{dp}".format(de=ideta,dp=idphi)
+                str_name_5 = "hRM_Pt_RecoJet_Ratio_{de}_{dp}".format(de=ideta,dp=idphi)
+                str_name_7 = "hRM_Pt_RecoJet_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
+
+                histos[str_name_5].Divide(histos[str_name_3])
+                histos[str_name_7].Divide(histos[str_name_3])
 
         # if not self.isData:
         #     histos["hNak5GenJets"].Scale( 1./histos["hNentries"].GetBinContent(1) )
@@ -954,10 +1029,10 @@ if __name__ == "__main__":
     sampleList = []
     # sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
 
-    # sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
+    sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
 
-    # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")    
+    # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
     # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
@@ -973,7 +1048,7 @@ if __name__ == "__main__":
     # sampleList.append("data_MelIntCalib_ZeroBias2_Run2015A")
 
     # sampleList.append("data_CastorJets_Run2015A")
-    sampleList.append("ReggeGribovPartonMC_castorJet_13TeV-EPOS")
+    # sampleList.append("ReggeGribovPartonMC_castorJet_13TeV-EPOS")
 
     # maxFilesMC = 50
     maxFilesData = 400
@@ -991,4 +1066,4 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           outFile = "plotsGenJetAnalysis_CastorJets_EPOS_2013IC.root" )
+           outFile = "plotsGenJetAnalysis_Pythia8_2013IC.root" )
