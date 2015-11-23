@@ -25,5 +25,5 @@ config.Data.publication = False
 
 config.section_("Site")
 config.Site.storageSite = 'T2_CH_CERN'
-config.Data.outLFNDirBase = '/store/group/phys_diffraction/cwohrman/CFF/ExpressStream'
+config.Data.outLFNDirBase = '/store/group/phys_diffraction/cwohrman/CFF/CastorJets'
 # config.Data.outLFNDirBase = '/store/group/phys_heavyions/cwohrman/CFF/CastorJets'

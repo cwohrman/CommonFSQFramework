@@ -217,12 +217,13 @@ if isData:
         cms.PSet(
             object = cms.string('Gains'),
             # file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
-            file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_AdjustToMeanFiveModInterCalibValues_20151105.txt')
+            # file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_AdjustToMeanFiveModInterCalibValues_20151105.txt')
+            file = cms.FileInPath('data/gain__1200x4_1600x10_4T.txt')
         ),
         cms.PSet(
             object = cms.string('ChannelQuality'),
             # file = cms.FileInPath('data/quality__2015.txt')
-            file = cms.FileInPath('data/quality__2015_FirstFiveMod.txt')
+            file = cms.FileInPath('data/quality__2015a.txt')
         )
      )
   )
