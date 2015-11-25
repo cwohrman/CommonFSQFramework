@@ -367,12 +367,12 @@ sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["GT"]='GR_R_75_V5A'
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["name"]='data_NoLED0to38IC_ZeroBias3_Run2015A'
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["isData"]=True
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["numEvents"]=8450456
-# sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20150820_data_ZeroBias3_Run2015A/150928_143543/0000/'
-# sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20150820_data_ZeroBias3_Run2015A/150928_143543/0000//'
+sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_diffraction/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20150820_data_NoLED0to38IC_ZeroBias3_Run2015A/151123_154414/0000/'
+sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_diffraction/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20150820_data_NoLED0to38IC_ZeroBias3_Run2015A/151123_154414/0000//'
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["lumiMinBias"]=-1
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["XS"]=-1
-# sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyions/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20150820_data_ZeroBias3_Run2015A/150928_143543/0000//'
+sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_diffraction/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20150820_data_NoLED0to38IC_ZeroBias3_Run2015A/151123_154414/0000//'
 sam["data_NoLED0to38IC_ZeroBias3_Run2015A"]["DS"]='/ZeroBias3/Run2015A-PromptReco-v1/RECO'
 
 sam["data_ZeroBias1_Run2015A"]={}
