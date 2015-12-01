@@ -36,9 +36,35 @@ if not isData:
     )
 if isData: 
     process.source = cms.Source("PoolSource",
-        fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias/RECO/PromptReco-v1/000/247/607/00000/52EA626D-9210-E511-843F-02163E01451D.root')
+        # fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias/RECO/PromptReco-v1/000/247/607/00000/52EA626D-9210-E511-843F-02163E01451D.root')
+        # fileNames = cms.untracked.vstring('/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/0AE1AFA5-220B-E511-B7D4-02163E014239.root')
         # fileNames = cms.untracked.vstring("/store/data/Run2015A/CastorJets/RECO/PromptReco-v1/000/247/607/00000/0066B745-A010-E511-B055-02163E014374.root")
         # fileNames = cms.untracked.vstring('root://eoscms.cern.ch//eos/cms/store/express/Run2015A/ExpressPhysics/FEVT/Express-v1/000/247/324/00000/D04CD2F9-130D-E511-B157-02163E014147.root')
+
+        fileNames = cms.untracked.vstring(
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/865/00000/C60316FA-150B-E511-AFCE-02163E0136E1.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/0AE1AFA5-220B-E511-B7D4-02163E014239.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/0CADC28A-390B-E511-853D-02163E0121C5.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/10D9909F-260B-E511-9A53-02163E014113.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/168661B7-300B-E511-870A-02163E013653.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/1A1D4A18-2E0B-E511-9A5A-02163E012925.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/1CC6C5E8-220B-E511-8640-02163E011ACE.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/1E5ADEF5-200B-E511-B722-02163E01184D.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/1E84CAD2-230B-E511-88F9-02163E013861.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/20A71F54-550B-E511-B4DD-02163E0142F3.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/20FBFCC6-240B-E511-A826-02163E012925.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/2275F0CE-200B-E511-B714-02163E0143FC.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/26CE2328-410B-E511-833A-02163E01184E.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/2A151439-2C0B-E511-A1E1-02163E01383E.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/2C44A971-230B-E511-B5E3-02163E012925.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/34DC8712-220B-E511-8CE6-02163E0146EE.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/3C37180B-220B-E511-AA12-02163E014220.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/4862A3D9-220B-E511-A2CF-02163E013491.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/4A84D28D-160B-E511-B9A2-02163E0142BF.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/542C34A0-270B-E511-862E-02163E011BDB.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/5C1F3477-230B-E511-BD27-02163E0142D7.root',
+          '/store/data/Run2015A/ZeroBias1/RECO/PromptReco-v1/000/246/908/00000/62A6E7A7-250B-E511-A56F-02163E011DBC.root',
+        )
     )
 
 
@@ -50,7 +76,7 @@ if isData:
 process.load("Configuration.Geometry.GeometryRecoDB_cff")
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
-if isData: process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_data', '')
+if isData: process.GlobalTag = GlobalTag(process.GlobalTag, 'GR_P_V56', '')
 if not isData: process.GlobalTag = GlobalTag(process.GlobalTag, 'auto:run2_mc', '')
 process.load("Configuration.StandardSequences.MagneticField_cff")
 
@@ -80,47 +106,47 @@ if not isData:
 
 
 
-###############################################################################
-###############################################################################
+# ###############################################################################
+# ###############################################################################
 
-###########################################################################
-# Add PAT calo Jets # !!! Still with old JEC (Jet Energy Corrections) !!! #
-###########################################################################
-## switch to uncheduled mode
-process.options.allowUnscheduled = cms.untracked.bool(True)
-#process.Tracer = cms.Service("Tracer")
+# ###########################################################################
+# # Add PAT calo Jets # !!! Still with old JEC (Jet Energy Corrections) !!! #
+# ###########################################################################
+# ## switch to uncheduled mode
+# process.options.allowUnscheduled = cms.untracked.bool(True)
+# #process.Tracer = cms.Service("Tracer")
 
-process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
-process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
+# process.load("PhysicsTools.PatAlgos.producersLayer1.patCandidates_cff")
+# process.load("PhysicsTools.PatAlgos.selectionLayer1.selectedPatCandidates_cff")
 
-from PhysicsTools.PatAlgos.tools.metTools import addMETCollection
-addMETCollection(process, labelName='patMETPF', metSource='pfMetT1')
+# from PhysicsTools.PatAlgos.tools.metTools import addMETCollection
+# addMETCollection(process, labelName='patMETPF', metSource='pfMetT1')
 
-## uncomment the following line to add different jet collections
-## to the event content
-from PhysicsTools.PatAlgos.tools.jetTools import addJetCollection
-from PhysicsTools.PatAlgos.tools.jetTools import switchJetCollection
+# ## uncomment the following line to add different jet collections
+# ## to the event content
+# from PhysicsTools.PatAlgos.tools.jetTools import addJetCollection
+# from PhysicsTools.PatAlgos.tools.jetTools import switchJetCollection
 
-# uncomment the following lines to switch to ak4CaloJets in your PAT output
-labelAK4Calo = 'AK4Calo'
-addJetCollection(
-   process,
-   labelName = labelAK4Calo,
-   jetSource = cms.InputTag('ak4CaloJets'),
-   jetCorrections = ('AK7Calo', cms.vstring(['L1FastJet', 'L2Relative', 'L3Absolute']), 'Type-1'), # FIXME: Use proper JECs, as soon as available
-   btagDiscriminators = [
-       'pfJetBProbabilityBJetTags'
-     , 'pfJetProbabilityBJetTags'
-     , 'pfTrackCountingHighPurBJetTags'
-     , 'pfTrackCountingHighEffBJetTags'
-     , 'pfSimpleSecondaryVertexHighEffBJetTags'
-     , 'pfSimpleSecondaryVertexHighPurBJetTags'
-     , 'pfCombinedInclusiveSecondaryVertexV2BJetTags'
-     ]
-)
-process.patJetsAK4Calo.useLegacyJetMCFlavour=True # Need to use legacy flavour since the new flavour requires jet constituents which are dropped for CaloJets from AOD
-###############################################################################
-###############################################################################
+# # uncomment the following lines to switch to ak4CaloJets in your PAT output
+# labelAK4Calo = 'AK4Calo'
+# addJetCollection(
+#    process,
+#    labelName = labelAK4Calo,
+#    jetSource = cms.InputTag('ak4CaloJets'),
+#    jetCorrections = ('AK7Calo', cms.vstring(['L1FastJet', 'L2Relative', 'L3Absolute']), 'Type-1'), # FIXME: Use proper JECs, as soon as available
+#    btagDiscriminators = [
+#        'pfJetBProbabilityBJetTags'
+#      , 'pfJetProbabilityBJetTags'
+#      , 'pfTrackCountingHighPurBJetTags'
+#      , 'pfTrackCountingHighEffBJetTags'
+#      , 'pfSimpleSecondaryVertexHighEffBJetTags'
+#      , 'pfSimpleSecondaryVertexHighPurBJetTags'
+#      , 'pfCombinedInclusiveSecondaryVertexV2BJetTags'
+#      ]
+# )
+# process.patJetsAK4Calo.useLegacyJetMCFlavour=True # Need to use legacy flavour since the new flavour requires jet constituents which are dropped for CaloJets from AOD
+# ###############################################################################
+# ###############################################################################
 
 
 
@@ -130,6 +156,8 @@ process = CommonFSQFramework.Core.customizePAT.customize(process)
 
 # GT customization
 process = CommonFSQFramework.Core.customizePAT.customizeGT(process)
+
+
 
 ###############################################################################
 ###############################################################################
@@ -147,13 +175,14 @@ if isData:
         cms.PSet(
             object = cms.string('Gains'),
             # file = cms.FileInPath('data/gain__1200x4_1600x10_led0to38.txt')
-            # file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_AdjustToMeanFiveModInterCalibValues_20151105.txt')
-            file = cms.FileInPath('data/gain__1200x4_1600x10_4T.txt')
+            file = cms.FileInPath('data/gain_MelikeMuon_InterCalib_AbsCalib_AdjustToMeanFiveModInterCalibValues_20151105.txt')
+            # file = cms.FileInPath('data/gain__1200x4_1600x10_4T.txt')
         ),
         cms.PSet(
             object = cms.string('ChannelQuality'),
             # file = cms.FileInPath('data/quality__2015.txt')
-            file = cms.FileInPath('data/quality__2015a.txt')
+            # file = cms.FileInPath('data/quality__2015a.txt')
+            file = cms.FileInPath('data/BadChannels_FinalManualSelection_20151113.txt')
         )
      )
   )
@@ -163,7 +192,8 @@ else:
       input = cms.VPSet(
         cms.PSet(
             object = cms.string('ChannelQuality'),
-            file = cms.FileInPath('data/quality__2015.txt')
+            # file = cms.FileInPath('data/quality__2015.txt')
+            file = cms.FileInPath('data/BadChannels_FinalManualSelection_20151113.txt')
         )
      )
   )
@@ -196,6 +226,7 @@ else:
     )
 process.CastorTowerReco.inputprocess = "rechitcorrector"
 process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
+# process.CastorReReco = cms.Path(process.CastorFullReco)
 ###############################################################################
 ###############################################################################
 
@@ -204,20 +235,44 @@ process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
 ###############################################################################
 ###############################################################################
 
-########################
-# Castor Jet-pT Filter #
-########################
-process.CastorJetFilter = cms.EDFilter("CastorJetFilter",
-    minCastorJetPt = cms.double(1.),
-    minCastorJetEnergy = cms.double(250.),
-    jetRadius = cms.double(0.5)
-)
+# ########################
+# # Castor Jet-pT Filter #
+# ########################
+# process.CastorJetFilter = cms.EDFilter("CastorJetFilter",
+#     minCastorJetPt = cms.double(1.),
+#     minCastorJetEnergy = cms.double(250.),
+#     jetRadius = cms.double(0.5)
+# )
+# ###############################################################################
+# ###############################################################################
+
 ###############################################################################
 ###############################################################################
+# HLT path filter
+process.hltzerobias = cms.EDFilter("HLTHighLevel",
+     TriggerResultsTag = cms.InputTag("TriggerResults","","HLT"),
+     HLTPaths = cms.vstring('HLT_ZeroBias_part0_v1',
+                            'HLT_ZeroBias_part1_v1',
+                            'HLT_ZeroBias_part2_v1',
+                            'HLT_ZeroBias_part3_v1',
+                            'HLT_ZeroBias_part4_v1',
+                            'HLT_ZeroBias_part5_v1',
+                            'HLT_ZeroBias_part6_v1',
+                            'HLT_ZeroBias_part7_v1'), # provide list of HLT paths (or patterns) you want
+     eventSetupPathsKey = cms.string(''), # not empty => use read paths from AlCaRecoTriggerBitsRcd via this key #HLT_MinBiasBSC # HLT_L1Tech_BSC_minBias
+     andOr = cms.bool(True),             # how to deal with multiple triggers: True (OR) accept if ANY is true, False (AND) accept if ALL are true
+     throw = cms.bool(False)    # throw exception on unknown path names
+) 
+###############################################################################
+###############################################################################
+
 
 
 # define treeproducer
 process.JetCastor = cms.EDAnalyzer("CFFTreeProducer")
+
+# apply filter on treeproducer
+process.FiltererdTree = cms.Path(process.hltzerobias*process.JetCastor)
 # process.FiltererdTree = cms.Path(process.CastorJetFilter*process.JetCastor)
 
 import CommonFSQFramework.Core.VerticesViewsConfigs
@@ -240,7 +295,9 @@ if not isData:
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.CastorViewsConfigs.get(["ak5CastorJetView","CastorRecHitViewFull"]))
 # process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.PFObjectsViewsConfigs.get(["PFCandidateView","ecalPFClusterView","hcalPFClusterView","hfPFClusterView"]))
 process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.TriggerResultsViewsConfigs.get(["CastorSpecialJetTriggerResultsView","L1GTriggerResultsView"]))
-process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.JetViewsConfigs.get(["JetViewAK4Calo"]))
+
+# Jet View only works with pat::Jet; Need to uncomment pat::Jet creation lines before
+# process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.JetViewsConfigs.get(["JetViewAK4Calo"]))
 
 if not isData:
     process.JetCastor._Parameterizable__setParameters(CommonFSQFramework.Core.GenLevelViewsConfigs.get(["GenPartView"]))
@@ -251,5 +308,9 @@ if not isData:
 
 
 process = CommonFSQFramework.Core.customizePAT.addPath(process, process.CastorReReco)
-process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)
-# process = CommonFSQFramework.Core.customizePAT.addPath(process, process.FiltererdTree)
+
+# Tree without filter
+# process = CommonFSQFramework.Core.customizePAT.addTreeProducer(process, process.JetCastor)
+
+# Tree with filter
+process = CommonFSQFramework.Core.customizePAT.addPath(process, process.FiltererdTree)

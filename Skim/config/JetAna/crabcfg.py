@@ -24,6 +24,8 @@ config.Data.publication = False
 # config.Data.outputDatasetTag = 'HW_ExpressStream'
 
 config.section_("Site")
-config.Site.storageSite = 'T2_CH_CERN'
-config.Data.outLFNDirBase = '/store/group/phys_diffraction/cwohrman/CFF/CastorJets'
+# config.Site.storageSite = 'T2_CH_CERN'
+config.Site.storageSite = 'T2_DE_DESY'
+config.Data.outLFNDirBase = '/store/user/cwohrman/CFF/CastorJets'
+# config.Data.outLFNDirBase = '/store/group/phys_diffraction/cwohrman/CFF/CastorJets'
 # config.Data.outLFNDirBase = '/store/group/phys_heavyions/cwohrman/CFF/CastorJets'
