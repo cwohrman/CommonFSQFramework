@@ -536,15 +536,15 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
             if not self.jetPreCut_corrE(ecjet): CorrCastorRecoJets.append(ecjet)
 
 
-        MaxCentralRecoJetPt = [0.,0.]
-        NCentralRecoJets = self.fChain.PFAK4Calophi.size()
-        for ijet in xrange(0,NCentralRecoJets):
-            jetphi = self.fChain.PFAK4Calophi[ijet]
-            jetpt  = self.fChain.PFAK4Calopt[ijet]
+        # MaxCentralRecoJetPt = [0.,0.]
+        # NCentralRecoJets = self.fChain.PFAK4Calophi.size()
+        # for ijet in xrange(0,NCentralRecoJets):
+        #     jetphi = self.fChain.PFAK4Calophi[ijet]
+        #     jetpt  = self.fChain.PFAK4Calopt[ijet]
 
-            if jetpt > MaxCentralRecoJetPt[0]:
-                MaxCentralRecoJetPt[0] = jetpt
-                MaxCentralRecoJetPt[1] = jetphi
+        #     if jetpt > MaxCentralRecoJetPt[0]:
+        #         MaxCentralRecoJetPt[0] = jetpt
+        #         MaxCentralRecoJetPt[1] = jetphi
 
 
 
@@ -581,11 +581,11 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
 
             # self.hist["dPhi_HotTower_HotCasJet"].Fill( self.movePhiRange( jet.phi() - max_tower_sec*pi/8. ) )
 
-            if CastorDiJetTrg:
-                if not NCentralRecoJets == 0:
-                    if jet.e() > 2000:
-                        dphi = self.movePhiRange( MaxCentralRecoJetPt[1] - jet.phi() )
-                        self.hist["hDeltaPhiRecoJetHotCasJet"].Fill(dphi)
+            # if CastorDiJetTrg:
+            #     if not NCentralRecoJets == 0:
+            #         if jet.e() > 2000:
+            #             dphi = self.movePhiRange( MaxCentralRecoJetPt[1] - jet.phi() )
+            #             self.hist["hDeltaPhiRecoJetHotCasJet"].Fill(dphi)
 
             # ###########################################################################
             # just counting
@@ -833,8 +833,8 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
                                 self.hist[str_name_6].Fill(hotgenjet.pt(),weight)
                                 self.hist[str_name_7].Fill(hotgenjet.pt(),weight)
 
-        for jet_eta in self.fChain.PFAK4Caloeta:
-            self.hist["hdNdEtaak4CaloJets"].Fill(jet_eta, weight)
+        # for jet_eta in self.fChain.PFAK4Caloeta:
+        #     self.hist["hdNdEtaak4CaloJets"].Fill(jet_eta, weight)
 
 
         if not self.isData:
@@ -989,6 +989,8 @@ class GenJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProofRead
                 histos[str_name_5].Divide(histos[str_name_3])
                 histos[str_name_7].Divide(histos[str_name_3])
 
+
+
         # if not self.isData:
         #     histos["hNak5GenJets"].Scale( 1./histos["hNentries"].GetBinContent(1) )
 
@@ -1022,7 +1024,7 @@ if __name__ == "__main__":
     sampleList = None # run through all
     maxFilesMC = None # run through all files found
     maxFilesData = None # same
-    nWorkers = None # Use all cpu cores
+    nWorkers = 1 #None # Use all cpu cores
 
     # debug config:
     # Run printTTree.py alone to get the samples list
@@ -1033,7 +1035,7 @@ if __name__ == "__main__":
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
-    # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
+    sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff")
@@ -1046,7 +1048,7 @@ if __name__ == "__main__":
     # sampleList.append("data_SumZeroBias_Run2015A")
     # sampleList.append("data_MelIntCalib_ZeroBias1_Run2015A")
     # sampleList.append("data_MelIntCalib_ZeroBias2_Run2015A")
-    sampleList.append("data_NoLED0to38IC_ZeroBias3_Run2015A")
+    # sampleList.append("data_NoLED0to38IC_ZeroBias3_Run2015A")
 
     # sampleList.append("data_CastorJets_Run2015A")
     # sampleList.append("ReggeGribovPartonMC_castorJet_13TeV-EPOS")
@@ -1067,4 +1069,4 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           outFile = "plotsGenJetAnalysis_ZeroBias_2013IC_Mag4T.root" )
+           outFile = "plotsGenJetAnalysis_TEST_2015AIC.root" )
