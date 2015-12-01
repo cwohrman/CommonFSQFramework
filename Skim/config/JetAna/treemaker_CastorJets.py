@@ -246,19 +246,14 @@ process.CastorReReco = cms.Path(process.rechitcorrector*process.CastorFullReco)
 # ###############################################################################
 # ###############################################################################
 
+
+
 ###############################################################################
 ###############################################################################
 # HLT path filter
 process.hltzerobias = cms.EDFilter("HLTHighLevel",
      TriggerResultsTag = cms.InputTag("TriggerResults","","HLT"),
-     HLTPaths = cms.vstring('HLT_ZeroBias_part0_v1',
-                            'HLT_ZeroBias_part1_v1',
-                            'HLT_ZeroBias_part2_v1',
-                            'HLT_ZeroBias_part3_v1',
-                            'HLT_ZeroBias_part4_v1',
-                            'HLT_ZeroBias_part5_v1',
-                            'HLT_ZeroBias_part6_v1',
-                            'HLT_ZeroBias_part7_v1'), # provide list of HLT paths (or patterns) you want
+     HLTPaths = cms.vstring('HLT_L1CastorMediumJet_v1'), # provide list of HLT paths (or patterns) you want
      eventSetupPathsKey = cms.string(''), # not empty => use read paths from AlCaRecoTriggerBitsRcd via this key #HLT_MinBiasBSC # HLT_L1Tech_BSC_minBias
      andOr = cms.bool(True),             # how to deal with multiple triggers: True (OR) accept if ANY is true, False (AND) accept if ALL are true
      throw = cms.bool(False)    # throw exception on unknown path names
