@@ -31,8 +31,10 @@ def compareJetPt(x,y):
 def compareSpecialListJetPt(x,y):
     return compareJetPt(x[0],y[0])
 
-class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader):
+class GenJetLeadECorr(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader):
     def init(self):
+
+        self.jetPrePtCutValue = 1.
 
         self.hist = {}
         self.hist["hNentries"] = ROOT.TH1F("hNentries","hNentries",3,-0.5,2.5)
@@ -49,44 +51,32 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         etamax = -4.5 # -5.2 + 0.7 -> ak7
         netabin = 28
 
-    
-        self.hist["hAll_GenJetPt"] = ROOT.TH1F("hAll_GenJetPt","hAll_GenJetPt",nptbin,ptmin,ptmax)
-        self.hist["hAll_RecoJetPt"] = ROOT.TH1F("hAll_RecoJetPt","hAll_RecoJetPt",nptbin,ptmin,ptmax)
+        self.hist["hdNdPtak5CastorJets"] =  ROOT.TH1F("hdNdPtak5CastorJets","hdNdPtak5CastorJets",nptbin,ptmin,ptmax)
+        self.hist["hNTowak5CastorJets"]  =  ROOT.TH1F("hNTowak5CastorJets","hNTowak5CastorJets",7,-0.5,6.5)
 
-        for ideta in xrange(idetamin,idetamax):
-            for idphi in xrange(idphimin,idphimax):
-                str_name_1 = "hAll_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_1] = ROOT.TH2F(str_name_1,str_name_1,nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
+        self.hist["hDeltaPhiGenJetHotCasJet"] = ROOT.TH1F("hDeltaPhiGenJetHotCasJet","hDeltaPhiGenJetHotCasJet",50,-pi,pi)
+        self.hist["hEGenJetVsECasJet"]        = ROOT.TH2F("hEGenJetVsECasJet","hEGenJetVsECasJet",nebin,emin,emax,nebin,emin,emax)
+        self.hist["hPtGenJetVsPtCasJet"]      = ROOT.TH2F("hPtGenJetVsPtCasJet","hPtGenJetVsPtCasJet",nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
 
-                str_name_2 = "hAll_Count_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_2] = ROOT.TH1F(str_name_2,str_name_2,10,0,10)
+        self.hist["hCountMergedJet"] = ROOT.TH1F("hCountMergedJet","hCountMergedJet",10,0,10)
 
-                str_name_3 = "hAll_RecoJetPt_Fake_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_3] = ROOT.TH1F(str_name_3,str_name_3,nptbin,ptmin,ptmax)
+        self.hist["hPtGenJetVsPtCasJet_EtaPhiCut"]    = ROOT.TH2F("hPtGenJetVsPtCasJet_EtaPhiCut","hPtGenJetVsPtCasJet_EtaPhiCut",nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
+        self.hist["hPtGenJetVsPtCasJet_NoSecJet"]     = ROOT.TH2F("hPtGenJetVsPtCasJet_NoSecJet","hPtGenJetVsPtCasJet_NoSecJet",nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
+        self.hist["hPtGenJetVsPtCasJet_NoPartInCone"] = ROOT.TH2F("hPtGenJetVsPtCasJet_NoPartInCone","hPtGenJetVsPtCasJet_NoPartInCone",nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
 
-                str_name_4 = "hAll_RecoJetPt_RatFake_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_4] = ROOT.TH1F(str_name_4,str_name_4,nptbin,ptmin,ptmax)
+        self.hist["hdNdEMergedCasJet"]     = ROOT.TH1F("hdNdEMergedCasJet","hdNdEMergedCasJet",nebin,emin,emax)
+        self.hist["hdNdPtMergedCasJet"]    = ROOT.TH1F("hdNdPtMergedCasJet","hdNdPtMergedCasJet",nptbin,ptmin,ptmax)
 
-                str_name_5 = "hAll_GenJetPt_Misses_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_5] = ROOT.TH1F(str_name_5,str_name_5,nptbin,ptmin,ptmax)
+        bb = array('d',[])
+        nb = 3
+        bmin = 250.
+        bmax = 2500.
+        for i in range(nb+1):
+            b = log(bmin) + i*(log(bmax)-log(bmin))/nb
+            bb.append(exp(b))
 
-                str_name_6 = "hAll_GenJetPt_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_6] = ROOT.TH1F(str_name_6,str_name_6,nptbin,ptmin,ptmax)
-
-                str_name_7 = "hAll_RecoJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_7] = ROOT.TH1F(str_name_7,str_name_7,nptbin,ptmin,ptmax)
-
-                str_name_8 = "hAll_GenJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_8] = ROOT.TH1F(str_name_8,str_name_8,nptbin,ptmin,ptmax)
-
-        #     bb = array('d',[])
-        #     nb = 3
-        #     bmin = 250.
-        #     bmax = 2500.
-        #     for i in range(nb+1):
-        #         b = log(bmin) + i*(log(bmax)-log(bmin))/nb
-        #         bb.append(exp(b))
-
+        self.hist["pECasJetGenReco"]          = ROOT.TProfile("pECasJetGenReco","pECasJetGenReco",len(bb)-1,bb)
+        self.hist["ptest"]                    = ROOT.TProfile("ptest","ptest",len(bb)-1,bb)
 
         # # ======================
         # phimin = -pi
@@ -157,7 +147,7 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         return False
 
     def jetPreCut(self, jet):
-        return (jet.eta() > -5.7 or jet.eta() < -6.1 or jet.pt() < self.jetPrePtCutValue or jet.e() < 250)
+        return (jet.eta() > -5.7 or jet.eta() < -6.1 or jet.pt() < self.jetPrePtCutValue)
 
     def jetPreCut_corrE(self, jet):
         return (jet.eta() > -5.7 or jet.eta() < -6.1 or jet.pt() < self.jetPrePtCutValue*self.energy_corr_factor or jet.e() < 250*self.energy_corr_factor)
@@ -294,70 +284,76 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         CastorRecoJets = []
         for ijet in xrange(0,NCastorRecoJets):
             jet = self.fChain.ak5CastorJetsP4[ijet]
-            CastorRecoJets.append(jet)
+            nTow = self.fChain.ak5CastorJetsnTowers[ijet]
+            fem = self.fChain.ak5CastorJetsfem[ijet]
+            zDpt = self.fChain.ak5CastorJetsdepth[ijet]
 
-            self.hist["hAll_RecoJetPt"].Fill(jet.pt()*self.energy_corr_factor)
-        CastorRecoJets.sort(cmp=compareJetPt)
+            self.hist["hdNdPtak5CastorJets"].Fill(jet.pt(), weight)
+            self.hist["hNTowak5CastorJets"].Fill(nTow, weight)
 
+            if not self.jetPreCut(jet): CastorRecoJets.append([jet, nTow, fem, zDpt])
 
-        CastorHadronLevelGenJets = []
-        for gjet in self.fChain.ak5GenJetsp4:
-            if gjet.eta() < -6.6 or gjet.eta() > -5.2: continue
-            CastorHadronLevelGenJets.append(gjet)
-
-            self.hist["hAll_GenJetPt"].Fill(gjet.pt())
-        CastorHadronLevelGenJets.sort(cmp=compareJetPt)
+        CastorRecoJets.sort(cmp=compareSpecialListJetPt)
 
 
+        MergedGenCastorJet = None
+        isIsolated = True
+        if len(CastorRecoJets) > 0:
+            mindphi = 0.2
+            HottestCastorJet = CastorRecoJets[0][0]
+            NTowerHotCastorJet = CastorRecoJets[0][1]
 
-        etacut = 0.7
-        phicut = 0.3
-        for ideta in xrange(idetamin,idetamax): 
-            for idphi in xrange(idphimin,idphimax):
-                str_name_1 = "hAll_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_2 = "hAll_Count_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_3 = "hAll_RecoJetPt_Fake_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_4 = "hAll_RecoJetPt_RatFake_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_5 = "hAll_GenJetPt_Misses_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_6 = "hAll_GenJetPt_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_7 = "hAll_RecoJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_8 = "hAll_GenJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
+            phi_inf, phi_sup = self.phiJetSectorRange(HottestCastorJet,NTowerHotCastorJet)
+            # self.hist["htest"].Fill(HottestCastorJet.phi(), phi_inf, weight )
+            # self.hist["htest"].Fill(HottestCastorJet.phi(), phi_sup, weight )
+            # self.hist["htest2"].Fill(NTowerHotCastorJet, abs(phi_sup-phi_inf))
 
-                etacut = float(ideta)/10.
-                phicut = float(idphi)/10.
+            # for iphi in xrange(-320,320):
+            #     phi = iphi/100.
+            #     if self.insideJetSector(phi,HottestCastorJet,NTowerHotCastorJet):
+            #         self.hist["htest"].Fill(HottestCastorJet.phi(),phi)
 
-                MergedGenJet = []
-                MergedRecoJet = []
-                for jet in CastorRecoJets:
-                    merged_jet = self.findMergeGenJet(jet,CastorHadronLevelGenJets,MergedGenJet,etacut,phicut)
-                    if not merged_jet is None:
-                        self.hist[str_name_1].Fill(jet.pt()*self.energy_corr_factor,merged_jet.pt())
-                        MergedGenJet.append(merged_jet)
-                        MergedRecoJet.append(jet)
+            dphi = 10.0
+            for jet in self.fChain.ak5GenJetsp4:
+                if self.jetPreCut(jet): continue
 
-                if len(MergedGenJet) != len(MergedRecoJet):
-                    raise Exception("Number of merged Gen and Reco Jets is not the same !!!")
+                dphi = self.getDphi(HottestCastorJet,jet)
 
-                for jet in CastorRecoJets:
-                    self.hist[str_name_2].Fill("All Reco",1)
-                    if jet in MergedRecoJet:
-                        self.hist[str_name_2].Fill("Merged Reco",1)
-                        self.hist[str_name_7].Fill(jet.pt()*self.energy_corr_factor)
-                    else:
-                        self.hist[str_name_2].Fill("Fake",1)
-                        self.hist[str_name_3].Fill(jet.pt()*self.energy_corr_factor)
-                        self.hist[str_name_4].Fill(jet.pt()*self.energy_corr_factor)
-                        
+                self.hist["hDeltaPhiGenJetHotCasJet"].Fill( dphi, weight )
 
-                for gjet in CastorHadronLevelGenJets:
-                    self.hist[str_name_2].Fill("All Gen",1)
-                    if gjet in MergedGenJet:
-                        self.hist[str_name_2].Fill("Merged Gen",1)
-                        self.hist[str_name_8].Fill(gjet.pt())
-                    else:
-                        self.hist[str_name_2].Fill("Misses",1)
-                        self.hist[str_name_5].Fill(gjet.pt())
-                        self.hist[str_name_6].Fill(gjet.pt())
+                if dphi < mindphi:
+                    mindphi = dphi
+                    MergedGenCastorJet = jet
+
+            if dphi != 10.0:
+                self.hist["hCountMergedJet"].Fill("Eta Cut",1)
+
+            if MergedGenCastorJet:
+                self.hist["hCountMergedJet"].Fill("Dphi cut",1)
+                self.hist["hPtGenJetVsPtCasJet_EtaPhiCut"].Fill( HottestCastorJet.pt(), MergedGenCastorJet.pt(), weight )
+                if self.secondGenJetOverlay(MergedGenCastorJet,HottestCastorJet):
+                    isIsolated = False
+
+            if MergedGenCastorJet and isIsolated:
+                self.hist["hCountMergedJet"].Fill("no 2.Jet",1)
+                self.hist["hPtGenJetVsPtCasJet_NoSecJet"].Fill( HottestCastorJet.pt(), MergedGenCastorJet.pt(), weight )
+                if self.particleInRecoNotGenCone(MergedGenCastorJet,HottestCastorJet):
+                    isIsolated = False
+
+            if MergedGenCastorJet and isIsolated:
+                self.hist["hCountMergedJet"].Fill("no P. in Reco Cone",1)
+                self.hist["hPtGenJetVsPtCasJet_NoPartInCone"].Fill( HottestCastorJet.pt(), MergedGenCastorJet.pt(), weight )
+                self.hist["ptest"].Fill( HottestCastorJet.e(), MergedGenCastorJet.e()/HottestCastorJet.e(), weight )
+                if self.particleInRecoJetSectorNotGenCone(MergedGenCastorJet,HottestCastorJet,NTowerHotCastorJet):
+                    isIsolated = False
+
+            if MergedGenCastorJet and isIsolated:
+                self.hist["hCountMergedJet"].Fill("no P. in Reco Area",1)
+                self.hist["hEGenJetVsECasJet"].Fill( HottestCastorJet.e(), MergedGenCastorJet.e(), weight )
+                self.hist["hPtGenJetVsPtCasJet"].Fill( HottestCastorJet.pt(), MergedGenCastorJet.pt(), weight )
+                self.hist["pECasJetGenReco"].Fill( HottestCastorJet.e(), MergedGenCastorJet.e()/HottestCastorJet.e(), weight )
+                self.hist["hdNdEMergedCasJet"].Fill( HottestCastorJet.e() )
+                self.hist["hdNdPtMergedCasJet"].Fill( HottestCastorJet.pt() )
 
         return 1
 
@@ -379,14 +375,6 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
                     continue
             histos[o.GetName()]=o
             # print " TH1 histogram in output: ", o.GetName()
-
-        for ideta in xrange(idetamin,idetamax): 
-            for idphi in xrange(idphimin,idphimax):
-                str_name_4 = "hAll_RecoJetPt_RatFake_{de}_{dp}".format(de=ideta,dp=idphi)
-                str_name_6 = "hAll_GenJetPt_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
-
-                histos[str_name_4].Divide(histos["hAll_RecoJetPt"])
-                histos[str_name_6].Divide(histos["hAll_GenJetPt"])
         
         pass
 
@@ -438,11 +426,11 @@ if __name__ == "__main__":
 
 
     # use printTTree.py <sampleName> to see what trees are avaliable inside the skim file
-    GenJetMerge.runAll(treeName="JetCastor",
+    GenJetLeadECorr.runAll(treeName="JetCastor",
            # slaveParameters=slaveParams,
            sampleList=sampleList,
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
            # maxNevents=1000000,
-           outFile = "TEST_Epos_Merging_4T.root" )
+           outFile = "TEST.root" )
