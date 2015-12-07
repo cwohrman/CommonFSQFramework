@@ -130,12 +130,12 @@ if __name__ == "__main__":
 
     # sampleList.append("data_SumL1MinimumBiasHF_Run2015A")
     # sampleList.append("data_MelIntCalib_SumL1MinimumBiasHF_Run2015A")
-    sampleList.append("data_SumZeroBias_Run2015A")
+    # sampleList.append("data_SumZeroBias_Run2015A")
     # sampleList.append("data_MelIntCalib_ZeroBias1_Run2015A")
     # sampleList.append("data_MelIntCalib_ZeroBias2_Run2015A")
     # sampleList.append("data_NoLED0to38IC_ZeroBias3_Run2015A")
 
-    # sampleList.append("data_CastorJets_Run2015A")
+    sampleList.append("data_CastorJets_Run2015A")
     # sampleList.append("ReggeGribovPartonMC_castorJet_13TeV-EPOS")
 
     # maxFilesMC = 50
@@ -154,4 +154,4 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           outFile = "TEST_2015AIC.root" )
+           outFile = "TEST.root" )
