@@ -45,12 +45,12 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
 
         ptmin = 1
         ptmax = 20
-        nptbin = 10
-        ptbinarr = np.array([],dtype=float)
-        ptbinarr.resize(nptbin+1)
-        for i in xrange(0,nptbin+1):
-            b = log(ptmin) + i*(log(ptmax)-log(ptmin))/nptbin
-            ptbinarr[i] = exp(b)
+        nptbin = 11
+        ptbinarr = np.array([1,1.5,2,2.5,3,4,5,6,8,10,13,20],dtype=float)
+        # ptbinarr.resize(nptbin+1)
+        # for i in xrange(0,nptbin+1):
+        #     b = log(ptmin) + i*(log(ptmax)-log(ptmin))/nptbin
+        #     ptbinarr[i] = exp(b)
 
         etamin = -7.3 # -6.6 - 0.7 -> ak7
         etamax = -4.5 # -5.2 + 0.7 -> ak7
@@ -98,6 +98,20 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
         ##################################################################################################
         ##################################################################################################
 
+
+
+
+        ##################################################################################################
+        # Special: for checking uncertanty in Energy skale
+        self.castor_energy_uncertanty = 0.22
+        self.hist["hScaleLow_RecoJetPt"] = ROOT.TH1F("hScaleLow_RecoJetPt","hScaleLow_RecoJetPt",nptbin,ptbinarr)
+        self.hist["hScaleUp_RecoJetPt"] = ROOT.TH1F("hScaleUp_RecoJetPt","hScaleUp_RecoJetPt",nptbin,ptbinarr)
+
+        self.hist["hSplit1_ScaleLow_RecoJetPt"] = ROOT.TH1F("hSplit1_ScaleLow_RecoJetPt","hSplit1_ScaleLow_RecoJetPt",nptbin,ptbinarr)
+        self.hist["hSplit1_ScaleUp_RecoJetPt"] = ROOT.TH1F("hSplit1_ScaleUp_RecoJetPt","hSplit1_ScaleUp_RecoJetPt",nptbin,ptbinarr)
+        self.hist["hSplit2_ScaleLow_RecoJetPt"] = ROOT.TH1F("hSplit2_ScaleLow_RecoJetPt","hSplit2_ScaleLow_RecoJetPt",nptbin,ptbinarr)
+        self.hist["hSplit2_ScaleUp_RecoJetPt"] = ROOT.TH1F("hSplit2_ScaleUp_RecoJetPt","hSplit2_ScaleUp_RecoJetPt",nptbin,ptbinarr)
+        ##################################################################################################
 
         #     bb = array('d',[])
         #     nb = 3
@@ -322,15 +336,34 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
             self.hist["hNentries"].Fill( 1, weight )
             SplitHistName = "hSplit2_"
 
+
+        #############################################################
+        # Reco Jet LOOP
+        #############################################################
         NCastorRecoJets = self.fChain.ak5CastorJetsP4.size()
         CastorRecoJets = []
         for ijet in xrange(0,NCastorRecoJets):
             jet = self.fChain.ak5CastorJetsP4[ijet]
             CastorRecoJets.append(jet)
 
-            self.hist["hAll_RecoJetPt"].Fill(jet.pt()*self.energy_corr_factor)
-            self.hist[SplitHistName+"RecoJetPt"].Fill(jet.pt()*self.energy_corr_factor)
+            #########################################################
+            self.hist["hAll_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor )
+            self.hist[SplitHistName+"RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor )
+            #########################################################
+
+            #########################################################
+            self.hist["hScaleLow_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1-self.castor_energy_uncertanty) )
+            self.hist["hScaleUp_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1+self.castor_energy_uncertanty) )
+
+            self.hist[SplitHistName+"ScaleLow_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1-self.castor_energy_uncertanty) )
+            self.hist[SplitHistName+"ScaleUp_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1+self.castor_energy_uncertanty) )
+            #########################################################
+
+        #############################################################
+        # Reco Jet LOOP
+        #############################################################
         CastorRecoJets.sort(cmp=compareJetPt)
+
 
 
 
@@ -487,5 +520,5 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           maxNevents=1000000,
-           outFile = "GenRecoJetAnalysis_ZB.root" )
+           # maxNevents=900000,
+           outFile = "GenRecoJetAnalysis_TEST.root" )

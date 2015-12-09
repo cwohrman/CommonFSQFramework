@@ -21,7 +21,7 @@ import numpy.ma as ma
 idetamin = 2
 idetamax = 7+1
 idphimin = 1
-idphimax = 5+1
+idphimax = 6+1
 
 def compareJetPt(x,y):
     if x.pt() < y.pt(): return 1
@@ -49,35 +49,43 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         etamax = -4.5 # -5.2 + 0.7 -> ak7
         netabin = 28
 
+        ptmax = 20
+        nptbin = 11
+        ptbinarr = np.array([1,1.5,2,2.5,3,4,5,6,8,10,13,20],dtype=float)
+        # ptbinarr.resize(nptbin+1)
+        # for i in xrange(0,nptbin+1):
+        #     b = log(ptmin) + i*(log(ptmax)-log(ptmin))/nptbin
+        #     ptbinarr[i] = exp(b)
+
     
-        self.hist["hAll_GenJetPt"] = ROOT.TH1F("hAll_GenJetPt","hAll_GenJetPt",nptbin,ptmin,ptmax)
-        self.hist["hAll_RecoJetPt"] = ROOT.TH1F("hAll_RecoJetPt","hAll_RecoJetPt",nptbin,ptmin,ptmax)
+        self.hist["hAll_GenJetPt"] = ROOT.TH1F("hAll_GenJetPt","hAll_GenJetPt",nptbin,ptbinarr)
+        self.hist["hAll_RecoJetPt"] = ROOT.TH1F("hAll_RecoJetPt","hAll_RecoJetPt",nptbin,ptbinarr)
 
         for ideta in xrange(idetamin,idetamax):
             for idphi in xrange(idphimin,idphimax):
                 str_name_1 = "hAll_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_1] = ROOT.TH2F(str_name_1,str_name_1,nptbin,ptmin,ptmax,nptbin,ptmin,ptmax)
+                self.hist[str_name_1] = ROOT.TH2F(str_name_1,str_name_1,nptbin,ptbinarr,nptbin,ptbinarr)
 
                 str_name_2 = "hAll_Count_{de}_{dp}".format(de=ideta,dp=idphi)
                 self.hist[str_name_2] = ROOT.TH1F(str_name_2,str_name_2,10,0,10)
 
                 str_name_3 = "hAll_RecoJetPt_Fake_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_3] = ROOT.TH1F(str_name_3,str_name_3,nptbin,ptmin,ptmax)
+                self.hist[str_name_3] = ROOT.TH1F(str_name_3,str_name_3,nptbin,ptbinarr)
 
                 str_name_4 = "hAll_RecoJetPt_RatFake_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_4] = ROOT.TH1F(str_name_4,str_name_4,nptbin,ptmin,ptmax)
+                self.hist[str_name_4] = ROOT.TH1F(str_name_4,str_name_4,nptbin,ptbinarr)
 
                 str_name_5 = "hAll_GenJetPt_Misses_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_5] = ROOT.TH1F(str_name_5,str_name_5,nptbin,ptmin,ptmax)
+                self.hist[str_name_5] = ROOT.TH1F(str_name_5,str_name_5,nptbin,ptbinarr)
 
                 str_name_6 = "hAll_GenJetPt_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_6] = ROOT.TH1F(str_name_6,str_name_6,nptbin,ptmin,ptmax)
+                self.hist[str_name_6] = ROOT.TH1F(str_name_6,str_name_6,nptbin,ptbinarr)
 
                 str_name_7 = "hAll_RecoJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_7] = ROOT.TH1F(str_name_7,str_name_7,nptbin,ptmin,ptmax)
+                self.hist[str_name_7] = ROOT.TH1F(str_name_7,str_name_7,nptbin,ptbinarr)
 
                 str_name_8 = "hAll_GenJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
-                self.hist[str_name_8] = ROOT.TH1F(str_name_8,str_name_8,nptbin,ptmin,ptmax)
+                self.hist[str_name_8] = ROOT.TH1F(str_name_8,str_name_8,nptbin,ptbinarr)
 
         #     bb = array('d',[])
         #     nb = 3
@@ -111,8 +119,8 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         #                        pi, -7*pi/8., -3*pi/4., -5*pi/8., -pi/2., -3*pi/8.,  -pi/4.,  -pi/8. ]
                                 
         self.TmpLorVec = ROOT.ROOT.Math.LorentzVector('ROOT::Math::PxPyPzE4D<double>')()
-        # self.energy_corr_factor = 1.46
-        self.energy_corr_factor = 1.0
+        self.energy_corr_factor = 1.399
+        # self.energy_corr_factor = 1.0
 
     # returns phi in the range of [-pi,pi]
     def movePhiRange(self,phi):
@@ -404,13 +412,13 @@ if __name__ == "__main__":
     # debug config:
     # Run printTTree.py alone to get the samples list
     sampleList = []
-    # sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
+    sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
 
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
-    sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
+    # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff")
@@ -429,7 +437,7 @@ if __name__ == "__main__":
     # sampleList.append("ReggeGribovPartonMC_castorJet_13TeV-EPOS")
 
     # maxFilesMC = 1
-    maxFilesData = 400
+    # maxFilesData = 400
     # nWorkers = 1
 
 
@@ -444,5 +452,5 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           # maxNevents=1000000,
-           outFile = "TEST_Epos_Merging_4T.root" )
+           maxNevents=1000000,
+           outFile = "GenJetMerge_MC.root" )
