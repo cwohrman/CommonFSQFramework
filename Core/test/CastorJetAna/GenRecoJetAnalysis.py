@@ -21,6 +21,8 @@ import numpy.ma as ma
 idetafix = 7
 idphifix = 5
 
+doReWeight = False
+
 def compareJetPt(x,y):
     if x.pt() < y.pt(): return 1
     if x.pt() > y.pt(): return -1
@@ -113,40 +115,34 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
         self.hist["hSplit2_ScaleUp_RecoJetPt"] = ROOT.TH1F("hSplit2_ScaleUp_RecoJetPt","hSplit2_ScaleUp_RecoJetPt",nptbin,ptbinarr)
         ##################################################################################################
 
-        #     bb = array('d',[])
-        #     nb = 3
-        #     bmin = 250.
-        #     bmax = 2500.
-        #     for i in range(nb+1):
-        #         b = log(bmin) + i*(log(bmax)-log(bmin))/nb
-        #         bb.append(exp(b))
 
 
-        # # ======================
-        # phimin = -pi
-        # phimax = pi
-        # nphibin = 16
-        # # ======================
-
-
-
-        # # ======================
-        # zmin = -16000
-        # zmax = -14000
-        # nzbin = 80
-        # # ======================
-
-
+        ###################################################
         for h in self.hist:
             self.hist[h].Sumw2()
             self.GetOutputList().Add(self.hist[h])
 
-        # self.SectorBorders = [ 0.,    pi/8.,    pi/4.,  3*pi/8.,  pi/2.,  5*pi/8., 3*pi/4., 7*pi/8., 
-        #                        pi, -7*pi/8., -3*pi/4., -5*pi/8., -pi/2., -3*pi/8.,  -pi/4.,  -pi/8. ]
-                                
-        self.TmpLorVec = ROOT.ROOT.Math.LorentzVector('ROOT::Math::PxPyPzE4D<double>')()
+
+        
+        ###################################################
         self.energy_corr_factor = 1.399
         # self.energy_corr_factor = 1.0
+
+
+
+        ###################################################
+        self.MCtoDATA_JetPtBinWeigth = {}
+        self.MCtoDATA_JetPtBinWeigth["MinBias_TuneCUETP8M1_13TeV-pythia8"] = [ 1.01, 0.90, 0.83, 0.79, 0.78, 0.80, 0.86, 0.92, 0.94, 1.06, 1.08]
+        self.MCtoDATA_JetPtBinWeigth["MinBias_TuneZ2star_13TeV-pythia6"] = [ 0.77, 0.66, 0.60, 0.57, 0.55, 0.55, 0.57, 0.59, 0.62, 0.72, 0.95]
+        self.MCtoDATA_JetPtBinWeigth["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"] = [ 0.77, 0.66, 0.60, 0.56, 0.55, 0.56, 0.58, 0.59, 0.61, 0.74, 0.82]
+        self.MCtoDATA_JetPtBinWeigth["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"] = [ 1.08, 0.99, 0.94, 0.91, 0.92, 0.95, 0.99, 1.07, 1.13, 1.25, 1.26]
+        self.MCtoDATA_JetPtBinWeigth["MinBias_TuneMBR_13TeV-pythia8"] = [ 0.76, 0.67, 0.62, 0.61, 0.62, 0.67, 0.72, 0.78, 0.84, 0.98, 1.28]
+        self.MCtoDATA_JetPtBinWeigth["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"] = [ 0.76, 0.66, 0.62, 0.62, 0.62, 0.67, 0.74, 0.78, 0.86, 1.02, 1.15]
+        self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-QGSJetII"] = [ 1.22, 1.20, 1.08, 0.94, 0.75, 0.58, 0.51, 0.46, 0.44, 0.43, 0.41]
+        self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"] = [ 1.22, 1.19, 1.08, 0.93, 0.74, 0.59, 0.51, 0.47, 0.44, 0.43, 0.40]
+        self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.11, 1.09, 1.05, 1.00, 0.92, 0.79, 0.69, 0.52, 0.36, 0.29, 0.28]
+        self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.11, 1.09, 1.05, 1.01, 0.91, 0.79, 0.68, 0.54, 0.37, 0.30, 0.23]
+
 
     # returns phi in the range of [-pi,pi]
     def movePhiRange(self,phi):
@@ -291,27 +287,39 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
                 return None
 
 
+    def getMCJetPtEventWeight(self):
+        sampleName = self.datasetName
+
+        tmp_weight = 0.0
+        tmp_n = 0.0
+        for jet in self.fChain.ak5CastorJetsP4:
+            if jet.pt() < 1 or jet.pt() > 20: continue
+
+            ibin = self.hist["hAll_RecoJetPt"].FindBin(jet.pt())
+            if ibin < 1 or ibin > 11: continue
+
+            tmp_weight += 1./self.MCtoDATA_JetPtBinWeigth[sampleName][ibin-1]
+            tmp_n += 1.0
+
+        if tmp_n == 0: return 1
+
+        return tmp_weight/tmp_n
 
 
     def analyze(self):
         weight = 1
         num = 0
         
-        self.hist["hNentries"].Fill( 0, weight )
+
+        ###################################################
+        # get weight for MC event by JetPt bin
+        if not self.isData and doReWeight:
+            weight = self.getMCJetPtEventWeight()
 
         evt  = self.fChain.event
         run  = self.fChain.run
         lumi = self.fChain.lumi
         bx   = self.fChain.bx
-
-
-        # if run >= 247685: return 0
-        if self.isData and bx < 200:
-            return 0
-
-        # algo100prescale = self.getPrescaleAlog100(run,lumi)
-        # if algo100prescale < 0: return 0
-        
 
         CastorMedJetTrg  = self.fChain.trgl1L1GTTech[58] or self.fChain.trgl1L1GTAlgo[100]
         CastorHighJetTrg = self.fChain.trgl1L1GTTech[57] or self.fChain.trgl1L1GTAlgo[101]
@@ -325,11 +333,17 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
             CastorHighJetTrg = self.fChain.trgl1L1GTTech[61]
             MinBiasTrg       = True
 
+        self.hist["hNentries"].Fill( 0, weight )
+
         # use only events with Bptx AND
         if self.isData:
             if not self.fChain.trgl1L1GTTech[0] or not ZeroBiasTrg:
                 return 0
 
+
+        # if run >= 247685: return 0
+        if self.isData and bx < 200:
+            return 0
 
         SplitHistName = "hSplit1_"
         if evt%2 == 1:
@@ -347,16 +361,16 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
             CastorRecoJets.append(jet)
 
             #########################################################
-            self.hist["hAll_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor )
-            self.hist[SplitHistName+"RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor )
+            self.hist["hAll_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor , weight )
+            self.hist[SplitHistName+"RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor , weight )
             #########################################################
 
             #########################################################
-            self.hist["hScaleLow_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1-self.castor_energy_uncertanty) )
-            self.hist["hScaleUp_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1+self.castor_energy_uncertanty) )
+            self.hist["hScaleLow_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1-self.castor_energy_uncertanty) , weight )
+            self.hist["hScaleUp_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1+self.castor_energy_uncertanty) , weight )
 
-            self.hist[SplitHistName+"ScaleLow_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1-self.castor_energy_uncertanty) )
-            self.hist[SplitHistName+"ScaleUp_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1+self.castor_energy_uncertanty) )
+            self.hist[SplitHistName+"ScaleLow_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1-self.castor_energy_uncertanty) , weight )
+            self.hist[SplitHistName+"ScaleUp_RecoJetPt"].Fill( jet.pt() * self.energy_corr_factor * (1+self.castor_energy_uncertanty) , weight )
             #########################################################
 
         #############################################################
@@ -373,8 +387,8 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
                 if gjet.eta() < -6.6 or gjet.eta() > -5.2: continue
                 CastorHadronLevelGenJets.append(gjet)
 
-                self.hist["hAll_GenJetPt"].Fill(gjet.pt())
-                self.hist[SplitHistName+"GenJetPt"].Fill(gjet.pt())
+                self.hist["hAll_GenJetPt"].Fill( gjet.pt() , weight )
+                self.hist[SplitHistName+"GenJetPt"].Fill( gjet.pt() , weight )
             CastorHadronLevelGenJets.sort(cmp=compareJetPt)
 
 
@@ -389,8 +403,8 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
             for jet in CastorRecoJets:
                 merged_jet = self.findMergeGenJet(jet,CastorHadronLevelGenJets,MergedGenJet,etacut,phicut)
                 if not merged_jet is None:
-                    self.hist["hAll_PtVsPt_GenRecoJet"].Fill(jet.pt()*self.energy_corr_factor,merged_jet.pt())
-                    self.hist[SplitHistName+"PtVsPt_GenRecoJet"].Fill(jet.pt()*self.energy_corr_factor,merged_jet.pt())
+                    self.hist["hAll_PtVsPt_GenRecoJet"].Fill(jet.pt()*self.energy_corr_factor,merged_jet.pt(), weight )
+                    self.hist[SplitHistName+"PtVsPt_GenRecoJet"].Fill(jet.pt()*self.energy_corr_factor,merged_jet.pt(), weight )
                     MergedGenJet.append(merged_jet)
                     MergedRecoJet.append(jet)
 
@@ -398,35 +412,35 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
                 raise Exception("Number of merged Gen and Reco Jets is not the same !!!")
 
             for jet in CastorRecoJets:
-                self.hist["hAll_Count"].Fill("All Reco",1)
-                self.hist[SplitHistName+"Count"].Fill("All Reco",1)
+                self.hist["hAll_Count"].Fill("All Reco", weight )
+                self.hist[SplitHistName+"Count"].Fill("All Reco", weight )
                 if jet in MergedRecoJet:
-                    self.hist["hAll_Count"].Fill("Merged Reco",1)
-                    self.hist["hAll_RecoJetPt_Merged"].Fill(jet.pt()*self.energy_corr_factor)
-                    self.hist[SplitHistName+"Count"].Fill("Merged Reco",1)
-                    self.hist[SplitHistName+"RecoJetPt_Merged"].Fill(jet.pt()*self.energy_corr_factor)
+                    self.hist["hAll_Count"].Fill("Merged Reco", weight )
+                    self.hist["hAll_RecoJetPt_Merged"].Fill(jet.pt()*self.energy_corr_factor, weight )
+                    self.hist[SplitHistName+"Count"].Fill("Merged Reco", weight )
+                    self.hist[SplitHistName+"RecoJetPt_Merged"].Fill(jet.pt()*self.energy_corr_factor, weight )
                 else:
-                    self.hist["hAll_Count"].Fill("Fake",1)
-                    self.hist["hAll_RecoJetPt_Fake"].Fill(jet.pt()*self.energy_corr_factor)
-                    self.hist["hAll_RecoJetPt_RatFake"].Fill(jet.pt()*self.energy_corr_factor)
-                    self.hist[SplitHistName+"Count"].Fill("Fake",1)
-                    self.hist[SplitHistName+"RecoJetPt_Fake"].Fill(jet.pt()*self.energy_corr_factor)
-                    self.hist[SplitHistName+"RecoJetPt_RatFake"].Fill(jet.pt()*self.energy_corr_factor)
+                    self.hist["hAll_Count"].Fill("Fake", weight )
+                    self.hist["hAll_RecoJetPt_Fake"].Fill(jet.pt()*self.energy_corr_factor, weight )
+                    self.hist["hAll_RecoJetPt_RatFake"].Fill(jet.pt()*self.energy_corr_factor, weight )
+                    self.hist[SplitHistName+"Count"].Fill("Fake", weight )
+                    self.hist[SplitHistName+"RecoJetPt_Fake"].Fill(jet.pt()*self.energy_corr_factor, weight )
+                    self.hist[SplitHistName+"RecoJetPt_RatFake"].Fill(jet.pt()*self.energy_corr_factor, weight )
                         
             for gjet in CastorHadronLevelGenJets:
-                self.hist["hAll_Count"].Fill("All Gen",1)
+                self.hist["hAll_Count"].Fill("All Gen", weight )
                 if gjet in MergedGenJet:
-                    self.hist["hAll_Count"].Fill("Merged Gen",1)
-                    self.hist["hAll_GenJetPt_Merged"].Fill(gjet.pt())
-                    self.hist[SplitHistName+"Count"].Fill("Merged Gen",1)
-                    self.hist[SplitHistName+"GenJetPt_Merged"].Fill(gjet.pt())
+                    self.hist["hAll_Count"].Fill("Merged Gen", weight )
+                    self.hist["hAll_GenJetPt_Merged"].Fill(gjet.pt(), weight )
+                    self.hist[SplitHistName+"Count"].Fill("Merged Gen", weight )
+                    self.hist[SplitHistName+"GenJetPt_Merged"].Fill(gjet.pt(), weight )
                 else:
-                    self.hist["hAll_Count"].Fill("Misses",1)
-                    self.hist["hAll_GenJetPt_Misses"].Fill(gjet.pt())
-                    self.hist["hAll_GenJetPt_RatMis"].Fill(gjet.pt())
-                    self.hist[SplitHistName+"Count"].Fill("Misses",1)
-                    self.hist[SplitHistName+"GenJetPt_Misses"].Fill(gjet.pt())
-                    self.hist[SplitHistName+"GenJetPt_RatMis"].Fill(gjet.pt())
+                    self.hist["hAll_Count"].Fill("Misses", weight )
+                    self.hist["hAll_GenJetPt_Misses"].Fill(gjet.pt(), weight )
+                    self.hist["hAll_GenJetPt_RatMis"].Fill(gjet.pt(), weight )
+                    self.hist[SplitHistName+"Count"].Fill("Misses", weight )
+                    self.hist[SplitHistName+"GenJetPt_Misses"].Fill(gjet.pt(), weight )
+                    self.hist[SplitHistName+"GenJetPt_RatMis"].Fill(gjet.pt(), weight )
             ###################################################################
             # finish if not self.isData
             ###################################################################
@@ -479,24 +493,27 @@ if __name__ == "__main__":
     # debug config:
     # Run printTTree.py alone to get the samples list
     sampleList = []
-    # sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
-    # sampleList.append("MinBias_TuneZ2star_13TeV-pythia6")
+    sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
+    sampleList.append("MinBias_TuneMonash13_13TeV-pythia8_MagnetOff")
 
-    # sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
-    # sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
+    sampleList.append("MinBias_TuneZ2star_13TeV-pythia6")
+    sampleList.append("MinBias_TuneZ2star_13TeV-pythia6_MagnetOff")
 
-    # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
-    # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
+    sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
+    sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
 
-    # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
-    # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff")
+    sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
+    sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
+
+    sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
+    sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff")
 
     # sampleList.append("data_ZeroBias1_Run2015A")
     # sampleList.append("data_L1MinimumBiasHF1_Run2015A")
 
     # sampleList.append("data_SumL1MinimumBiasHF_Run2015A")
     # sampleList.append("data_MelIntCalib_SumL1MinimumBiasHF_Run2015A")
-    sampleList.append("data_SumZeroBias_Run2015A")
+    # sampleList.append("data_SumZeroBias_Run2015A")
     # sampleList.append("data_MelIntCalib_ZeroBias1_Run2015A")
     # sampleList.append("data_MelIntCalib_ZeroBias2_Run2015A")
     # sampleList.append("data_NoLED0to38IC_ZeroBias3_Run2015A")
@@ -513,6 +530,10 @@ if __name__ == "__main__":
     # slaveParams["maxEta"] = 2.
 
 
+    outputFileName = "GenRecoJetAnalysis_MC"
+    if doReWeight: outputFileName += "_ReWeightMC"
+    outputFileName += ".root"
+
     # use printTTree.py <sampleName> to see what trees are avaliable inside the skim file
     GenRecoJetAnalysis.runAll(treeName="JetCastor",
            # slaveParameters=slaveParams,
@@ -520,5 +541,5 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           # maxNevents=900000,
-           outFile = "GenRecoJetAnalysis_TEST.root" )
+           maxNevents=1000000,
+           outFile = outputFileName )
