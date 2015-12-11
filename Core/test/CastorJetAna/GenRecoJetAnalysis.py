@@ -21,7 +21,7 @@ import numpy.ma as ma
 idetafix = 7
 idphifix = 5
 
-doReWeight = False
+doReWeight = True
 
 def compareJetPt(x,y):
     if x.pt() < y.pt(): return 1
@@ -142,6 +142,18 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
         self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"] = [ 1.22, 1.19, 1.08, 0.93, 0.74, 0.59, 0.51, 0.47, 0.44, 0.43, 0.40]
         self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.11, 1.09, 1.05, 1.00, 0.92, 0.79, 0.69, 0.52, 0.36, 0.29, 0.28]
         self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.11, 1.09, 1.05, 1.01, 0.91, 0.79, 0.68, 0.54, 0.37, 0.30, 0.23]
+
+        self.MCtoDATA_SecndWeigth = {}
+        self.MCtoDATA_SecndWeigth["MinBias_TuneCUETP8M1_13TeV-pythia8"] = [ 1.03, 0.91, 0.88, 0.86, 0.88, 0.92, 0.99, 1.04, 1.01, 1.12, 1.08]
+        self.MCtoDATA_SecndWeigth["MinBias_TuneZ2star_13TeV-pythia6"] = [ 0.85, 0.79, 0.78, 0.77, 0.78, 0.81, 0.85, 0.86, 0.88, 1.00, 1.21]
+        self.MCtoDATA_SecndWeigth["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"] = [ 0.85, 0.79, 0.77, 0.76, 0.78, 0.82, 0.85, 0.86, 0.86, 1.04, 1.06]
+        self.MCtoDATA_SecndWeigth["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"] = [ 1.07, 0.95, 0.93, 0.93, 0.95, 1.00, 1.03, 1.09, 1.11, 1.20, 1.14]
+        self.MCtoDATA_SecndWeigth["MinBias_TuneMBR_13TeV-pythia8"] = [ 0.85, 0.80, 0.80, 0.81, 0.86, 0.92, 0.97, 1.00, 1.02, 1.13, 1.35]
+        self.MCtoDATA_SecndWeigth["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"] = [ 0.85, 0.80, 0.81, 0.82, 0.85, 0.91, 1.00, 1.00, 1.03, 1.17, 1.17]
+        self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-QGSJetII"] = [ 1.17, 1.06, 0.97, 0.86, 0.73, 0.66, 0.65, 0.72, 0.80, 0.82, 0.84]
+        self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"] = [ 1.17, 1.06, 0.97, 0.86, 0.73, 0.68, 0.66, 0.72, 0.78, 0.82, 0.86]
+        self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.08, 1.03, 1.00, 0.95, 0.90, 0.81, 0.73, 0.60, 0.50, 0.50, 0.66]
+        self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.08, 1.03, 1.00, 0.97, 0.89, 0.81, 0.72, 0.62, 0.51, 0.48, 0.54]
 
 
     # returns phi in the range of [-pi,pi]
@@ -298,7 +310,7 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
             ibin = self.hist["hAll_RecoJetPt"].FindBin(jet.pt())
             if ibin < 1 or ibin > 11: continue
 
-            tmp_weight += 1./self.MCtoDATA_JetPtBinWeigth[sampleName][ibin-1]
+            tmp_weight += 1./(self.MCtoDATA_JetPtBinWeigth[sampleName][ibin-1]*self.MCtoDATA_SecndWeigth[sampleName][ibin-1])
             tmp_n += 1.0
 
         if tmp_n == 0: return 1
