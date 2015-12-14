@@ -271,11 +271,15 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         weight = 1
         num = 0
         
-        self.hist["hNentries"].Fill( 0, weight )
-
+        evt  = self.fChain.event
         run  = self.fChain.run
         lumi = self.fChain.lumi
         bx   = self.fChain.bx
+
+        # if evt%10 != 1:
+        #     return 0
+
+        self.hist["hNentries"].Fill( 0, weight )
 
         # if run >= 247685: return 0
         if self.isData and bx < 200:
@@ -412,13 +416,13 @@ if __name__ == "__main__":
     # debug config:
     # Run printTTree.py alone to get the samples list
     sampleList = []
-    sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
+    # sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
 
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
-    # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
+    sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff")
@@ -452,5 +456,5 @@ if __name__ == "__main__":
            maxFilesMC = maxFilesMC,
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
-           maxNevents=1000000,
-           outFile = "GenJetMerge_MC.root" )
+           # maxNevents=1000000,
+           outFile = "GenJetMerge_EPOS.root" )

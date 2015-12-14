@@ -21,7 +21,7 @@ import numpy.ma as ma
 idetafix = 7
 idphifix = 5
 
-doReWeight = True
+doReWeight = False
 
 def compareJetPt(x,y):
     if x.pt() < y.pt(): return 1
@@ -36,6 +36,7 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
 
         self.hist = {}
         self.hist["hNentries"] = ROOT.TH1F("hNentries","hNentries",3,-0.5,2.5)
+        self.hist["hRunNbr"] = ROOT.TH1F("hRunNbr","hRunNbr minus 247000",2000,0,2000)
 
         emin = 0
         emax = 10000
@@ -143,6 +144,8 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
         self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.11, 1.09, 1.05, 1.00, 0.92, 0.79, 0.69, 0.52, 0.36, 0.29, 0.28]
         self.MCtoDATA_JetPtBinWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.11, 1.09, 1.05, 1.01, 0.91, 0.79, 0.68, 0.54, 0.37, 0.30, 0.23]
 
+        ####################################################
+        # collect with Njets mean weighted bins
         self.MCtoDATA_SecndWeigth = {}
         self.MCtoDATA_SecndWeigth["MinBias_TuneCUETP8M1_13TeV-pythia8"] = [ 1.03, 0.91, 0.88, 0.86, 0.88, 0.92, 0.99, 1.04, 1.01, 1.12, 1.08]
         self.MCtoDATA_SecndWeigth["MinBias_TuneZ2star_13TeV-pythia6"] = [ 0.85, 0.79, 0.78, 0.77, 0.78, 0.81, 0.85, 0.86, 0.88, 1.00, 1.21]
@@ -155,6 +158,48 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
         self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.08, 1.03, 1.00, 0.95, 0.90, 0.81, 0.73, 0.60, 0.50, 0.50, 0.66]
         self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.08, 1.03, 1.00, 0.97, 0.89, 0.81, 0.72, 0.62, 0.51, 0.48, 0.54]
 
+        ####################################################
+        # collect with Njets mean weighted bins
+        self.MCtoDATA_ThirdWeigth = {}
+        self.MCtoDATA_ThirdWeigth["MinBias_TuneCUETP8M1_13TeV-pythia8"] = [ 1.04, 0.90, 0.92, 0.92, 0.95, 1.00, 1.07, 1.08, 1.00, 1.11, 1.05]
+        self.MCtoDATA_ThirdWeigth["MinBias_TuneZ2star_13TeV-pythia6"] = [ 0.89, 0.87, 0.89, 0.89, 0.91, 0.95, 0.98, 0.97, 0.97, 1.09, 1.23]
+        self.MCtoDATA_ThirdWeigth["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"] = [ 1.06, 0.92, 0.95, 0.96, 0.99, 1.03, 1.05, 1.09, 1.07, 1.14, 1.05]
+        self.MCtoDATA_ThirdWeigth["MinBias_TuneMBR_13TeV-pythia8"] = [ 0.90, 0.89, 0.91, 0.93, 0.98, 1.02, 1.05, 1.05, 1.03, 1.13, 1.28]
+        self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-QGSJetII"] = [ 1.14, 0.97, 0.92, 0.84, 0.76, 0.81, 0.86, 1.03, 1.11, 1.07, 1.03]
+        self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.07, 0.99, 0.98, 0.94, 0.91, 0.84, 0.78, 0.69, 0.69, 0.82, 1.20]
+        self.MCtoDATA_ThirdWeigth["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"] = [ 0.89, 0.87, 0.88, 0.88, 0.92, 0.96, 0.98, 0.96, 0.94, 1.13, 1.08]
+        self.MCtoDATA_ThirdWeigth["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"] = [ 0.90, 0.89, 0.92, 0.94, 0.96, 1.01, 1.08, 1.04, 1.03, 1.16, 1.10]
+        self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"] = [ 1.14, 0.97, 0.92, 0.84, 0.76, 0.83, 0.87, 1.01, 1.07, 1.08, 1.07]
+        self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.07, 0.99, 0.98, 0.96, 0.90, 0.85, 0.78, 0.72, 0.69, 0.76, 1.01]
+
+        
+        ####################################################
+        # collect with pt weighted weights
+        # self.MCtoDATA_SecndWeigth = {}
+        # self.MCtoDATA_SecndWeigth["MinBias_TuneCUETP8M1_13TeV-pythia8"] = [ 1.03, 0.91, 0.88, 0.87, 0.89, 0.94, 1.02, 1.07, 1.02, 1.12, 1.06]
+        # self.MCtoDATA_SecndWeigth["MinBias_TuneZ2star_13TeV-pythia6"] = [ 0.85, 0.80, 0.78, 0.77, 0.79, 0.83, 0.87, 0.90, 0.91, 1.03, 1.21]
+        # self.MCtoDATA_SecndWeigth["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"] = [ 0.85, 0.80, 0.78, 0.77, 0.80, 0.84, 0.88, 0.89, 0.89, 1.07, 1.06]
+        # self.MCtoDATA_SecndWeigth["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"] = [ 1.07, 0.96, 0.94, 0.93, 0.96, 1.01, 1.05, 1.10, 1.10, 1.18, 1.09]
+        # self.MCtoDATA_SecndWeigth["MinBias_TuneMBR_13TeV-pythia8"] = [ 0.85, 0.81, 0.80, 0.81, 0.87, 0.93, 0.99, 1.01, 1.00, 1.10, 1.27]
+        # self.MCtoDATA_SecndWeigth["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"] = [ 0.86, 0.81, 0.81, 0.83, 0.86, 0.92, 1.01, 1.00, 1.01, 1.14, 1.09]
+        # self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-QGSJetII"] = [ 1.17, 1.07, 0.97, 0.87, 0.74, 0.69, 0.70, 0.79, 0.90, 0.93, 0.95]
+        # self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"] = [ 1.17, 1.07, 0.97, 0.86, 0.74, 0.71, 0.71, 0.79, 0.88, 0.92, 0.94]
+        # self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.08, 1.03, 1.01, 0.96, 0.91, 0.82, 0.76, 0.64, 0.58, 0.60, 0.83]
+        # self.MCtoDATA_SecndWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.09, 1.03, 1.00, 0.98, 0.90, 0.83, 0.75, 0.66, 0.58, 0.59, 0.67]
+
+        ####################################################
+        # collect with pt weighted weights
+        # self.MCtoDATA_ThirdWeigth = {}
+        # self.MCtoDATA_ThirdWeigth["MinBias_TuneCUETP8M1_13TeV-pythia8"] = [ 1.04, 0.91, 0.93, 0.93, 0.97, 1.03, 1.10, 1.09, 0.98, 1.08, 0.99]
+        # self.MCtoDATA_ThirdWeigth["MinBias_TuneZ2star_13TeV-pythia6"] = [ 0.90, 0.89, 0.89, 0.89, 0.93, 0.97, 1.00, 0.99, 0.96, 1.07, 1.16]
+        # self.MCtoDATA_ThirdWeigth["MinBias_TuneZ2star_13TeV-pythia6_MagnetOff"] = [ 0.90, 0.88, 0.89, 0.89, 0.93, 0.98, 1.00, 0.97, 0.94, 1.12, 1.02]
+        # self.MCtoDATA_ThirdWeigth["MinBias_TuneMonash13_13TeV-pythia8_MagnetOff"] = [ 1.07, 0.93, 0.95, 0.96, 1.00, 1.05, 1.07, 1.09, 1.04, 1.10, 0.98]
+        # self.MCtoDATA_ThirdWeigth["MinBias_TuneMBR_13TeV-pythia8"] = [ 0.90, 0.90, 0.91, 0.93, 0.99, 1.02, 1.05, 1.02, 0.97, 1.05, 1.15]
+        # self.MCtoDATA_ThirdWeigth["MinBias_TuneMBR_13TeV-pythia8_MagnetOff"] = [ 0.90, 0.89, 0.91, 0.94, 0.97, 1.01, 1.09, 1.02, 0.98, 1.09, 0.98]
+        # self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-QGSJetII"] = [ 1.15, 0.99, 0.93, 0.85, 0.79, 0.87, 0.94, 1.12, 1.18, 1.13, 1.05]
+        # self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff"] = [ 1.15, 0.99, 0.93, 0.85, 0.79, 0.89, 0.94, 1.10, 1.15, 1.13, 1.06]
+        # self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-EPOS"] = [ 1.07, 1.00, 0.99, 0.95, 0.92, 0.87, 0.83, 0.77, 0.83, 0.96, 1.38]
+        # self.MCtoDATA_ThirdWeigth["ReggeGribovPartonMC_13TeV-EPOS_MagnetOff"] = [ 1.07, 1.00, 0.99, 0.97, 0.91, 0.88, 0.83, 0.79, 0.82, 0.93, 1.14]
 
     # returns phi in the range of [-pi,pi]
     def movePhiRange(self,phi):
@@ -299,23 +344,35 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
                 return None
 
 
-    def getMCJetPtEventWeight(self):
+    # returns weight for event
+    # to shift MC Reco to Data Reco
+    def getMCJetPtEventWeight(self,jetptweight=False):
         sampleName = self.datasetName
 
         tmp_weight = 0.0
-        tmp_n = 0.0
+        sum_weight = 0.0
+        N_weight = 0.0
         for jet in self.fChain.ak5CastorJetsP4:
             if jet.pt() < 1 or jet.pt() > 20: continue
 
             ibin = self.hist["hAll_RecoJetPt"].FindBin(jet.pt())
             if ibin < 1 or ibin > 11: continue
 
-            tmp_weight += 1./(self.MCtoDATA_JetPtBinWeigth[sampleName][ibin-1]*self.MCtoDATA_SecndWeigth[sampleName][ibin-1])
-            tmp_n += 1.0
+            tmp_weight = 1.
+            tmp_weight *= self.MCtoDATA_JetPtBinWeigth[sampleName][ibin-1]
+            tmp_weight *= self.MCtoDATA_SecndWeigth[sampleName][ibin-1]
+            tmp_weight *= self.MCtoDATA_ThirdWeigth[sampleName][ibin-1]
 
-        if tmp_n == 0: return 1
+            if jetptweight:
+                sum_weight += jet.pt()/tmp_weight
+                N_weight += jet.pt()
+            else:
+                sum_weight += 1./tmp_weight
+                N_weight += 1.
 
-        return tmp_weight/tmp_n
+        if N_weight == 0: return 1
+
+        return sum_weight/N_weight
 
 
     def analyze(self):
@@ -332,6 +389,8 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
         run  = self.fChain.run
         lumi = self.fChain.lumi
         bx   = self.fChain.bx
+
+        self.hist["hRunNbr"].Fill(run-247000)
 
         CastorMedJetTrg  = self.fChain.trgl1L1GTTech[58] or self.fChain.trgl1L1GTAlgo[100]
         CastorHighJetTrg = self.fChain.trgl1L1GTTech[57] or self.fChain.trgl1L1GTAlgo[101]
