@@ -156,7 +156,7 @@ sam["data_CastorJets_Run2015A"]["isData"]=True
 sam["data_CastorJets_Run2015A"]["numEvents"]=36204306
 sam["data_CastorJets_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20151127_data_CastorJets_Run2015A/151201_204240/0000/'
 sam["data_CastorJets_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20151127_data_CastorJets_Run2015A/151201_204240/0000//'
-sam["data_CastorJets_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_CastorJets_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_CastorJets_Run2015A"]["lumiMinBias"]=-1
 sam["data_CastorJets_Run2015A"]["XS"]=-1
 sam["data_CastorJets_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/CastorJets/Long_RunIILowPU_0T_20151127_data_CastorJets_Run2015A/151201_204240/0000//'
@@ -170,7 +170,7 @@ sam["data_ZeroBias1_Run2015A"]["isData"]=True
 sam["data_ZeroBias1_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias1_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias1/Long_RunIILowPU_0T_20151127_data_ZeroBias1_Run2015A/151128_172348/0000/'
 sam["data_ZeroBias1_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias1/Long_RunIILowPU_0T_20151127_data_ZeroBias1_Run2015A/151128_172348/0000//'
-sam["data_ZeroBias1_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias1_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias1_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias1_Run2015A"]["XS"]=-1
 sam["data_ZeroBias1_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias1/Long_RunIILowPU_0T_20151127_data_ZeroBias1_Run2015A/151128_172348/0000//'
@@ -184,7 +184,7 @@ sam["data_ZeroBias2_Run2015A"]["isData"]=True
 sam["data_ZeroBias2_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias2_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias2/Long_RunIILowPU_0T_20151127_data_ZeroBias2_Run2015A/151128_185936/0000/'
 sam["data_ZeroBias2_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias2/Long_RunIILowPU_0T_20151127_data_ZeroBias2_Run2015A/151128_185936/0000//'
-sam["data_ZeroBias2_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias2_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias2_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias2_Run2015A"]["XS"]=-1
 sam["data_ZeroBias2_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias2/Long_RunIILowPU_0T_20151127_data_ZeroBias2_Run2015A/151128_185936/0000//'
@@ -198,7 +198,7 @@ sam["data_ZeroBias3_Run2015A"]["isData"]=True
 sam["data_ZeroBias3_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias3_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20151127_data_ZeroBias3_Run2015A/151128_190051/0000/'
 sam["data_ZeroBias3_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20151127_data_ZeroBias3_Run2015A/151128_190051/0000//'
-sam["data_ZeroBias3_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias3_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias3_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias3_Run2015A"]["XS"]=-1
 sam["data_ZeroBias3_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias3/Long_RunIILowPU_0T_20151127_data_ZeroBias3_Run2015A/151128_190051/0000//'
@@ -212,7 +212,7 @@ sam["data_ZeroBias4_Run2015A"]["isData"]=True
 sam["data_ZeroBias4_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias4_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias4/Long_RunIILowPU_0T_20151127_data_ZeroBias4_Run2015A/151128_200515/0000/'
 sam["data_ZeroBias4_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias4/Long_RunIILowPU_0T_20151127_data_ZeroBias4_Run2015A/151128_200515/0000//'
-sam["data_ZeroBias4_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias4_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias4_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias4_Run2015A"]["XS"]=-1
 sam["data_ZeroBias4_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias4/Long_RunIILowPU_0T_20151127_data_ZeroBias4_Run2015A/151128_200515/0000//'
@@ -226,7 +226,7 @@ sam["data_ZeroBias5_Run2015A"]["isData"]=True
 sam["data_ZeroBias5_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias5_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias5/Long_RunIILowPU_0T_20151127_data_ZeroBias5_Run2015A/151128_200540/0000/'
 sam["data_ZeroBias5_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias5/Long_RunIILowPU_0T_20151127_data_ZeroBias5_Run2015A/151128_200540/0000//'
-sam["data_ZeroBias5_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias5_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias5_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias5_Run2015A"]["XS"]=-1
 sam["data_ZeroBias5_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias5/Long_RunIILowPU_0T_20151127_data_ZeroBias5_Run2015A/151128_200540/0000//'
@@ -240,7 +240,7 @@ sam["data_ZeroBias6_Run2015A"]["isData"]=True
 sam["data_ZeroBias6_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias6_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias6/Long_RunIILowPU_0T_20151127_data_ZeroBias6_Run2015A/151128_200625/0000/'
 sam["data_ZeroBias6_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias6/Long_RunIILowPU_0T_20151127_data_ZeroBias6_Run2015A/151128_200625/0000//'
-sam["data_ZeroBias6_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias6_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias6_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias6_Run2015A"]["XS"]=-1
 sam["data_ZeroBias6_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias6/Long_RunIILowPU_0T_20151127_data_ZeroBias6_Run2015A/151128_200625/0000//'
@@ -254,7 +254,7 @@ sam["data_ZeroBias7_Run2015A"]["isData"]=True
 sam["data_ZeroBias7_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias7_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias7/Long_RunIILowPU_0T_20151127_data_ZeroBias7_Run2015A/151128_200652/0000/'
 sam["data_ZeroBias7_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias7/Long_RunIILowPU_0T_20151127_data_ZeroBias7_Run2015A/151128_200652/0000//'
-sam["data_ZeroBias7_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias7_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias7_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias7_Run2015A"]["XS"]=-1
 sam["data_ZeroBias7_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias7/Long_RunIILowPU_0T_20151127_data_ZeroBias7_Run2015A/151128_200652/0000//'
@@ -268,7 +268,7 @@ sam["data_ZeroBias8_Run2015A"]["isData"]=True
 sam["data_ZeroBias8_Run2015A"]["numEvents"]=8450456
 sam["data_ZeroBias8_Run2015A"]["pathSE"]='srm://dcache-se-cms.desy.de:8443/srm/managerv2?SFN=/pnfs/desy.de/cms/tier2/store/user/cwohrman/CFF/CastorJets/ZeroBias8/Long_RunIILowPU_0T_20151127_data_ZeroBias8_Run2015A/151128_200715/0000/'
 sam["data_ZeroBias8_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/user/cwohrman/CFF/CastorJets/ZeroBias8/Long_RunIILowPU_0T_20151127_data_ZeroBias8_Run2015A/151128_200715/0000//'
-sam["data_ZeroBias8_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_ZeroBias8_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_ZeroBias8_Run2015A"]["lumiMinBias"]=-1
 sam["data_ZeroBias8_Run2015A"]["XS"]=-1
 sam["data_ZeroBias8_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/user/cwohrman/CFF/CastorJets/ZeroBias8/Long_RunIILowPU_0T_20151127_data_ZeroBias8_Run2015A/151128_200715/0000//'
@@ -282,7 +282,7 @@ sam["data_SumZeroBias_Run2015A"]["isData"]=True
 sam["data_SumZeroBias_Run2015A"]["numEvents"]=8450456
 sam["data_SumZeroBias_Run2015A"]["pathSE"]='srm://srm-eoscms.cern.ch:8443/srm/v2/server?SFN=/eos/cms/store/group/phys_diffraction/cwohrman/CFF/CastorJets/SumTreesDir_ZeroBias/'
 sam["data_SumZeroBias_Run2015A"]["pathTrees"]='/XXXTMFTTree/store/group/phys_diffraction/cwohrman/CFF/CastorJets/SumTreesDir_ZeroBias//'
-sam["data_SumZeroBias_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/LHCf_lowPUruns_v2.json'
+sam["data_SumZeroBias_Run2015A"]["json"]='CommonFSQFramework/Skim/lumi/Run2015A_LHCf_NoPrescaledCastorMedJetTrigger.json'
 sam["data_SumZeroBias_Run2015A"]["lumiMinBias"]=-1
 sam["data_SumZeroBias_Run2015A"]["XS"]=-1
 sam["data_SumZeroBias_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_diffraction/cwohrman/CFF/CastorJets/SumTreesDir_ZeroBias//'
