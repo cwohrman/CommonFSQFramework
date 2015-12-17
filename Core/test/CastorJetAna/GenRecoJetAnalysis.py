@@ -21,7 +21,7 @@ import numpy.ma as ma
 idetafix = 7
 idphifix = 5
 
-doReWeight = True
+doReWeight = False
 
 def compareJetPt(x,y):
     if x.pt() < y.pt(): return 1
@@ -352,7 +352,7 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
     #
     # return the merged genjet
     #        when not merged just None
-    def findMergeGenJet(self,recojet,list_genjet,merged_genjet,etacut=0.7,phicut=0.3,ptcut=0.1):
+    def findMergeGenJet(self,recojet,list_genjet,merged_genjet,etacut=0.7,phicut=0.3,ptcut=0.1,merge_pt_cut=False):
         MergeProposalGenJet = []
         for gjet in list_genjet:
             if gjet.eta() < -5.9-etacut or gjet.eta() > -5.9+etacut: continue
@@ -364,10 +364,16 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
             if len(MergeProposalGenJet) > 1:
                 # sort greater pt first
                 MergeProposalGenJet.sort(cmp=compareJetPt)
-                if MergeProposalGenJet[0].pt() * ptcut < MergeProposalGenJet[1].pt():
-                    return None
+
+                # testing if unfolding is depending on pt cut for gen jet merge candidates
+                if merge_pt_cut:
+                    if MergeProposalGenJet[0].pt() * ptcut < MergeProposalGenJet[1].pt():
+                        return None
+                    else:
+                        return MergeProposalGenJet[0]
                 else:
                     return MergeProposalGenJet[0]
+
             elif len(MergeProposalGenJet) == 1:
                 return MergeProposalGenJet[0]
             elif len(MergeProposalGenJet) == 0:
