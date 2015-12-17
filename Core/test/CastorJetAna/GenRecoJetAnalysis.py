@@ -347,8 +347,10 @@ class GenRecoJetAnalysis(CommonFSQFramework.Core.ExampleProofReader.ExampleProof
     # etamin = -5.9 - etacut; etamax = -5.9 + etacut
     # standard is etacut=0.7 => castor witdth in eta
     # phicut between jet.phi() and genjet.phi()
+    #
     # when more then one genjet fullfill eta and phi criteria then
     # pt_max_genjet * ptcut > pt_second_max_genjet
+    # include flag to switch on/off this pt cut
     #
     # return the merged genjet
     #        when not merged just None
