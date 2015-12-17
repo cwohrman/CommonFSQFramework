@@ -62,6 +62,9 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         self.hist["hAll_RecoJetPt"] = ROOT.TH1F("hAll_RecoJetPt","hAll_RecoJetPt",nptbin,ptbinarr)
 
         for ideta in xrange(idetamin,idetamax):
+            str_name_special = "hAll_GenJetPt_{de}".format(de=ideta)
+            self.hist[str_name_special] = ROOT.TH1F(str_name_special,str_name_special,nptbin,ptbinarr)
+
             for idphi in xrange(idphimin,idphimax):
                 str_name_1 = "hAll_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
                 self.hist[str_name_1] = ROOT.TH2F(str_name_1,str_name_1,nptbin,ptbinarr,nptbin,ptbinarr)
@@ -232,18 +235,21 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         return False
 
 
+
     # find to given recojet a mergable genjet out of list_genjet
     # don't uses genjets which are aleady in merged_genjet
     # 
     # etamin = -5.9 - etacut; etamax = -5.9 + etacut
     # standard is etacut=0.7 => castor witdth in eta
     # phicut between jet.phi() and genjet.phi()
+    #
     # when more then one genjet fullfill eta and phi criteria then
     # pt_max_genjet * ptcut > pt_second_max_genjet
+    # include flag to switch on/off this pt cut
     #
     # return the merged genjet
     #        when not merged just None
-    def findMergeGenJet(self,recojet,list_genjet,merged_genjet,etacut=0.7,phicut=0.3,ptcut=0.1):
+    def findMergeGenJet(self,recojet,list_genjet,merged_genjet,etacut=0.7,phicut=0.3,ptcut=0.1,merge_pt_cut=False):
         MergeProposalGenJet = []
         for gjet in list_genjet:
             if gjet.eta() < -5.9-etacut or gjet.eta() > -5.9+etacut: continue
@@ -255,16 +261,20 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
             if len(MergeProposalGenJet) > 1:
                 # sort greater pt first
                 MergeProposalGenJet.sort(cmp=compareJetPt)
-                if MergeProposalGenJet[0].pt() * ptcut < MergeProposalGenJet[1].pt():
-                    return None
+
+                # testing if unfolding is depending on pt cut for gen jet merge candidates
+                if merge_pt_cut:
+                    if MergeProposalGenJet[0].pt() * ptcut < MergeProposalGenJet[1].pt():
+                        return None
+                    else:
+                        return MergeProposalGenJet[0]
                 else:
                     return MergeProposalGenJet[0]
+
             elif len(MergeProposalGenJet) == 1:
                 return MergeProposalGenJet[0]
             elif len(MergeProposalGenJet) == 0:
                 return None
-
-
 
 
     def analyze(self):
@@ -312,19 +322,32 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
         CastorRecoJets.sort(cmp=compareJetPt)
 
 
-        CastorHadronLevelGenJets = []
-        for gjet in self.fChain.ak5GenJetsp4:
-            if gjet.eta() < -6.6 or gjet.eta() > -5.2: continue
-            CastorHadronLevelGenJets.append(gjet)
+        # CastorHadronLevelGenJets = []
+        # for gjet in self.fChain.ak5GenJetsp4:
+        #     if gjet.eta() < -6.6 or gjet.eta() > -5.2: continue
+        #     CastorHadronLevelGenJets.append(gjet)
 
-            self.hist["hAll_GenJetPt"].Fill(gjet.pt())
-        CastorHadronLevelGenJets.sort(cmp=compareJetPt)
-
+        #     self.hist["hAll_GenJetPt"].Fill(gjet.pt())
+        # CastorHadronLevelGenJets.sort(cmp=compareJetPt)
 
 
         etacut = 0.7
         phicut = 0.3
         for ideta in xrange(idetamin,idetamax): 
+            etacut = float(ideta)/10.
+
+            # change hadron level definition with eta cut
+            str_name_special = "hAll_GenJetPt_{de}".format(de=ideta)
+
+            CastorHadronLevelGenJets = []
+            for gjet in self.fChain.ak5GenJetsp4:
+                if gjet.eta() < -5.9-etacut or gjet.eta() > -5.9+etacut: continue
+                CastorHadronLevelGenJets.append(gjet)
+
+                self.hist[str_name_special].Fill(gjet.pt())
+            CastorHadronLevelGenJets.sort(cmp=compareJetPt)
+
+            
             for idphi in xrange(idphimin,idphimax):
                 str_name_1 = "hAll_PtVsPt_GenRecoJet_{de}_{dp}".format(de=ideta,dp=idphi)
                 str_name_2 = "hAll_Count_{de}_{dp}".format(de=ideta,dp=idphi)
@@ -335,7 +358,6 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
                 str_name_7 = "hAll_RecoJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
                 str_name_8 = "hAll_GenJetPt_Merged_{de}_{dp}".format(de=ideta,dp=idphi)
 
-                etacut = float(ideta)/10.
                 phicut = float(idphi)/10.
 
                 MergedGenJet = []
@@ -392,13 +414,15 @@ class GenJetMerge(CommonFSQFramework.Core.ExampleProofReader.ExampleProofReader)
             histos[o.GetName()]=o
             # print " TH1 histogram in output: ", o.GetName()
 
-        for ideta in xrange(idetamin,idetamax): 
+        for ideta in xrange(idetamin,idetamax):
+            str_name_special = "hAll_GenJetPt_{de}".format(de=ideta)
+
             for idphi in xrange(idphimin,idphimax):
                 str_name_4 = "hAll_RecoJetPt_RatFake_{de}_{dp}".format(de=ideta,dp=idphi)
                 str_name_6 = "hAll_GenJetPt_RatMis_{de}_{dp}".format(de=ideta,dp=idphi)
 
                 histos[str_name_4].Divide(histos["hAll_RecoJetPt"])
-                histos[str_name_6].Divide(histos["hAll_GenJetPt"])
+                histos[str_name_6].Divide(histos[str_name_special])
         
         pass
 
@@ -416,13 +440,13 @@ if __name__ == "__main__":
     # debug config:
     # Run printTTree.py alone to get the samples list
     sampleList = []
-    # sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
+    sampleList.append("MinBias_TuneCUETP8M1_13TeV-pythia8")
 
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8_MagnetOff")
     # sampleList.append("MinBias_TuneMBR_13TeV-pythia8")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII")
-    sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
+    # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS")
 
     # sampleList.append("ReggeGribovPartonMC_13TeV-EPOS_MagnetOff")
     # sampleList.append("ReggeGribovPartonMC_13TeV-QGSJetII_MagnetOff")
@@ -457,4 +481,4 @@ if __name__ == "__main__":
            maxFilesData = maxFilesData,
            nWorkers=nWorkers,
            # maxNevents=1000000,
-           outFile = "GenJetMerge_EPOS.root" )
+           outFile = "GenJetMerge_MC_ChangeHadLevDEta.root" )
