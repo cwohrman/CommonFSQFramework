@@ -9,6 +9,8 @@ skimEfficiencyMethod="getSkimEff"
 sam = {}
 
 # CFF Skim using interfill data from run 2015A
+# MuonHV: 1800V
+# MagnetField: 0T
 # No HLT filter selection was done
 sam["data_MinimumBias_Run2015A"]={}
 sam["data_MinimumBias_Run2015A"]["crabJobs"]=1609
@@ -25,6 +27,8 @@ sam["data_MinimumBias_Run2015A"]["pathPAT"]='/XXXTMFPAT/store/group/phys_heavyio
 sam["data_MinimumBias_Run2015A"]["DS"]='/MinimumBias/Run2015A-PromptReco-v1/RECO'
 
 # CFF Skim using interfill data from run 2015A
+# MuonHV: 1800V
+# MagnetField: 0T
 # Filtered on CastorMuon HLT path:
 #     HLT_L1CastorMuon_v1
 #  OR HLT_L1Tech59_CASTORHaloMuon_v1
@@ -47,6 +51,7 @@ sam["data_MinimumBias_MuonHLTSkim_Run2015A"]["DS"]='/MinimumBias/Run2015A-Prompt
 # This data is stored in the Cosmic dataset therefore it needed to run 
 # on RAW data (Cosmics/RECO has no Castor RecHit producer included). 
 # Need also to copy dataset from tape to T2_BE_IIHE to access it.
+# MuonHV: 1800V
 # MagnetField: Undefined 
 #              (Most propable 4T but in the end also 0T events could went in)
 # Filtered on CastorMuon HLT path:
@@ -71,6 +76,7 @@ sam["data_Cosmics_MuonHLTSkim_Run2015E"]["DS"]='/Cosmics/Run2015E-v1/RAW'
 # This data is stored in the Cosmic dataset therefore it needed to run 
 # on RAW data (Cosmics/RECO has no Castor RecHit producer included). 
 # Need also to copy dataset from tape to T2_BE_IIHE to access it.
+# MuonHV: 1800V
 # MagnetField: 4T
 # Filtered on CastorMuon HLT path:
 #     HLT_L1Tech59_CastorMuon_v1
@@ -94,6 +100,7 @@ sam["data_Cosmics_MuonHLTSkim_2015E_4T"]["DS"]='/Cosmics/Run2015E-v1/RAW'
 # This data is stored in the Cosmic dataset therefore it needed to run 
 # on RAW data (Cosmics/RECO has no Castor RecHit producer included). 
 # Need also to copy dataset from tape to T2_BE_IIHE to access it.
+# MuonHV: 1800V
 # MagnetField: 0T
 # Filtered on CastorMuon HLT path:
 #     HLT_L1Tech59_CastorMuon_v1
@@ -116,6 +123,7 @@ sam["data_Cosmics_MuonHLTSkim_2015E_0T"]["DS"]='/Cosmics/Run2015E-v1/RAW'
 # This data is stored in the Cosmic dataset therefore it needed to run 
 # on RAW data (Cosmics/RECO has no Castor RecHit producer included). 
 # Dataset need to be transfered on T2 Storage site
+# MuonHV: 1800V
 # MagnetField: 4T
 # Filtered on CastorMuon HLT path:
 #     HLT_L1Tech59_CastorMuon_v1
@@ -140,6 +148,7 @@ sam["data_Cosmics_MuonHLTSkim_HI2015E_4T"]["DS"]='/Cosmics/HIRun2015-v1/RAW'
 # This data is stored in the Cosmic dataset therefore it needed to run 
 # on RAW data (Cosmics/RECO has no Castor RecHit producer included). 
 # Dataset need to be transfered on T2 Storage site
+# MuonHV: pp physics HV
 # MagnetField: 4T
 # Filtered on CastorMuon HLT path:
 #     HLT_L1Tech59_CastorMuon_v1
